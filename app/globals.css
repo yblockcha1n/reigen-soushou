@@ -78,5 +78,32 @@
   }
   body {
     @apply bg-background text-foreground;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  
+  /* スクロールバーのカスタマイズ */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-muted/30;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/20 rounded-full hover:bg-muted-foreground/30 transition-colors;
+  }
+  
+  /* htmlとbodyのスクロール設定 */
+  html {
+    overflow-y: scroll;
+    scrollbar-width: thin;
+  }
+  
+  /* スクロールを滑らかに */
+  html {
+    scroll-behavior: smooth;
   }
 }
