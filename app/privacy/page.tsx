@@ -157,7 +157,7 @@ export default function PrivacyPage() {
             </Button>
             
             <p className="text-sm text-muted-foreground">
-              最終更新日: 2024年3月21日
+              最終更新日: 2025年3月24日
             </p>
           </motion.div>
         </div>

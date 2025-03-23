@@ -11,7 +11,7 @@ const navigation = {
     { name: 'サービス', href: '/#services' },
     { name: '企業理念', href: '/#philosophy' },
     { name: '実績', href: '/works' },
-    { name: 'お問い合わせ', href: '/#contact' },
+    { name: 'お問い合わせ', href: '/contact' },
   ],
   legal: [
     { name: '特定商取引法に基づく表記', href: '/legal' },
