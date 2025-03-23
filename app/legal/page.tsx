@@ -46,8 +46,8 @@ export default function LegalPage() {
     {
       title: "お問い合わせ",
       content: [
-        "Twitter: @y2_______",
-        "Email: your-email@example.com",
+        "Twitter: @reigen_soushou_",
+        "Email: reigen.soushou@gmail.com",
         "対応時間: 平日 9:00-18:00"
       ],
       icon: <Mail className="h-5 w-5" />

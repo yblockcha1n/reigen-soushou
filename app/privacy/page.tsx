@@ -86,8 +86,8 @@ export default function PrivacyPage() {
         "個人情報の取り扱いに関するお問い合わせは、以下の連絡先までご連絡ください：",
         "",
         "零元創匠",
-        "Email: your-email@example.com",
-        "Twitter: @y2_______"
+        "Email: reigen.soushou@gmail.com",
+        "Twitter: @reigen_soushou_"
       ],
       icon: <Mail className="h-5 w-5" />
     }

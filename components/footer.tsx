@@ -18,9 +18,9 @@ const navigation = {
     { name: 'プライバシーポリシー', href: '/privacy' },
   ],
   social: [
-    { name: 'Twitter', href: 'https://twitter.com/your-handle', icon: Twitter },
-    { name: 'Email', href: 'mailto:your-email@example.com', icon: Mail },
-    { name: 'GitHub', href: 'https://github.com/your-handle', icon: Github },
+    { name: 'Twitter', href: 'https://twitter.com/reigen_soushou_', icon: Twitter },
+    { name: 'Email', href: 'mailto:reigen.soushou@gmail.com', icon: Mail },
+    { name: 'GitHub', href: 'https://github.com/reigen_soushou_', icon: Github },
   ],
 };
 
@@ -87,14 +87,14 @@ export function Footer() {
                   <p>対応時間: 平日 9:00-18:00</p>
                   <p className="flex items-center">
                     <Mail className="h-4 w-4 mr-2 opacity-70" />
-                    <a href="mailto:your-email@example.com" className="hover:text-primary transition-colors">
-                      your-email@example.com
+                    <a href="mailto:reigen.soushou@gmail.com" className="hover:text-primary transition-colors">
+                    reigen.soushou@gmail.com
                     </a>
                   </p>
                   <p className="flex items-center">
                     <Twitter className="h-4 w-4 mr-2 opacity-70" />
-                    <a href="https://twitter.com/your-handle" className="hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
-                      @your-handle
+                    <a href="https://twitter.com/reigen_soushou_" className="hover:text-primary transition-colors" target="_blank" rel="noopener noreferrer">
+                      @reigen_soushou_
                     </a>
                   </p>
                 </address>

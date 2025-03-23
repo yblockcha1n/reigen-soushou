@@ -532,7 +532,7 @@ export default function Home() {
                   平日9:00-18:00で対応しております。
                 </p>
                 <Button variant="default" className="w-full" asChild>
-                  <a href="https://twitter.com/messages/compose?recipient_id=y2_______" target="_blank" rel="noopener noreferrer">
+                  <a href="https://twitter.com/messages/compose?recipient_id=reigen_soushou_" target="_blank" rel="noopener noreferrer">
                     DMを送る
                   </a>
                 </Button>
