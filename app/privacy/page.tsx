@@ -6,18 +6,6 @@ import { Separator } from "@/components/ui/separator";
 import { Shield, Database, AlertCircle, Lock, ArrowLeft, Mail, Phone, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BreadcrumbNav } from "@/components/breadcrumb-nav";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: 'プライバシーポリシー | 零元創匠',
-  description: '零元創匠のプライバシーポリシーをご案内します。個人情報の取り扱いについて定めています。',
-  openGraph: {
-    title: 'プライバシーポリシー | 零元創匠',
-    description: '零元創匠のプライバシーポリシーをご案内します。個人情報の取り扱いについて定めています。',
-    url: 'https://www.reigen-soushou.com/privacy',
-    type: 'website',
-  },
-};
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 10 },
