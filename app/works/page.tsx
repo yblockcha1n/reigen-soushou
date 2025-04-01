@@ -7,6 +7,19 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { BreadcrumbNav } from "@/components/breadcrumb-nav";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: '実績・開発事例 | 零元創匠',
+  description: '零元創匠の開発実績とプロジェクト事例をご紹介します。Web開発、ブロックチェーン開発、業務効率化ツールの開発実績があります。',
+  openGraph: {
+    title: '実績・開発事例 | 零元創匠',
+    description: '零元創匠の開発実績とプロジェクト事例をご紹介します。Web開発、ブロックチェーン開発、業務効率化ツールの開発実績があります。',
+    url: 'https://www.reigen-soushou.com/works',
+    type: 'website',
+  },
+};
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 10 },
@@ -88,6 +101,44 @@ export default function WorksPage() {
       className="min-h-screen pt-24 pb-20 bg-gradient-to-b from-background to-muted/30"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* スキーママークアップ */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CollectionPage",
+              "headline": "実績・開発事例 | 零元創匠",
+              "description": "零元創匠の開発実績とプロジェクト事例をご紹介します。Web開発、ブロックチェーン開発、業務効率化ツールの開発実績があります。",
+              "url": "https://www.reigen-soushou.com/works",
+              "mainEntity": {
+                "@type": "ItemList",
+                "itemListElement": developmentProjects.map((project, index) => ({
+                  "@type": "ListItem",
+                  "position": index + 1,
+                  "item": {
+                    "@type": "SoftwareApplication",
+                    "name": project.title,
+                    "description": project.description,
+                    "applicationCategory": "DeveloperApplication",
+                    "offers": {
+                      "@type": "Offer",
+                      "availability": "https://schema.org/InStock"
+                    }
+                  }
+                }))
+              }
+            })
+          }}
+        />
+
+        {/* パンくずリスト */}
+        <BreadcrumbNav
+          items={[
+            { title: '実績', href: '/works', isCurrent: true }
+          ]}
+        />
+        
         <motion.div 
           variants={fadeInUp}
           className="max-w-3xl mx-auto mb-16 text-center"
@@ -235,7 +286,7 @@ export default function WorksPage() {
                 まずはお気軽にご相談ください。
               </p>
               <Button size="lg" className="text-lg group" asChild>
-                <a href="/#contact">
+                <a href="/contact">
                   お問い合わせ
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </a>

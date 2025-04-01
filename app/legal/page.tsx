@@ -5,6 +5,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Info, Mail, MapPin, CreditCard, Clock, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BreadcrumbNav } from "@/components/breadcrumb-nav";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: '特定商取引法に基づく表記 | 零元創匠',
+  description: '零元創匠の特定商取引法に基づく表記をご案内します。当社のサービス提供における取引条件を明記しております。',
+  openGraph: {
+    title: '特定商取引法に基づく表記 | 零元創匠',
+    description: '零元創匠の特定商取引法に基づく表記をご案内します。当社のサービス提供における取引条件を明記しております。',
+    url: 'https://www.reigen-soushou.com/legal',
+    type: 'website',
+  },
+};
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 10 },
@@ -88,6 +101,34 @@ export default function LegalPage() {
       className="min-h-screen pt-24 pb-20 bg-gradient-to-b from-background to-muted/30"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Schema.org WebPage マークアップを追加 */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "特定商取引法に基づく表記 | 零元創匠",
+              "description": "零元創匠の特定商取引法に基づく表記をご案内します。当社のサービス提供における取引条件を明記しております。",
+              "url": "https://www.reigen-soushou.com/legal",
+              "datePublished": "2025-03-24",
+              "dateModified": "2025-03-24",
+              "publisher": {
+                "@type": "Organization",
+                "name": "零元創匠",
+                "url": "https://www.reigen-soushou.com"
+              }
+            })
+          }}
+        />
+
+        {/* パンくずリスト */}
+        <BreadcrumbNav
+          items={[
+            { title: '特定商取引法に基づく表記', href: '/legal', isCurrent: true }
+          ]}
+        />
+
         <motion.div 
           variants={fadeInUp}
           className="max-w-3xl mx-auto mb-16 text-center"
