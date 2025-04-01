@@ -5,6 +5,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Shield, Database, AlertCircle, Lock, ArrowLeft, Mail, Phone, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BreadcrumbNav } from "@/components/breadcrumb-nav";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'プライバシーポリシー | 零元創匠',
+  description: '零元創匠のプライバシーポリシーをご案内します。個人情報の取り扱いについて定めています。',
+  openGraph: {
+    title: 'プライバシーポリシー | 零元創匠',
+    description: '零元創匠のプライバシーポリシーをご案内します。個人情報の取り扱いについて定めています。',
+    url: 'https://www.reigen-soushou.com/privacy',
+    type: 'website',
+  },
+};
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 10 },
@@ -101,6 +114,34 @@ export default function PrivacyPage() {
       className="min-h-screen pt-24 pb-20 bg-gradient-to-b from-background to-muted/30"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Schema.org WebPage マークアップを追加 */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "プライバシーポリシー | 零元創匠",
+              "description": "零元創匠のプライバシーポリシーをご案内します。個人情報の取り扱いについて定めています。",
+              "url": "https://www.reigen-soushou.com/privacy",
+              "datePublished": "2025-03-24",
+              "dateModified": "2025-03-24",
+              "publisher": {
+                "@type": "Organization",
+                "name": "零元創匠",
+                "url": "https://www.reigen-soushou.com"
+              }
+            })
+          }}
+        />
+
+        {/* パンくずリスト */}
+        <BreadcrumbNav
+          items={[
+            { title: 'プライバシーポリシー', href: '/privacy', isCurrent: true }
+          ]}
+        />
+
         <motion.div 
           variants={fadeInUp}
           className="max-w-3xl mx-auto mb-16 text-center"

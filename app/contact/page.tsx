@@ -41,6 +41,19 @@ import {
 } from "@/components/ui/alert";
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
+import { BreadcrumbNav } from '@/components/breadcrumb-nav';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'お問い合わせ | 零元創匠',
+  description: '零元創匠へのお問い合わせはこちらから。Web開発、ブロックチェーン開発、業務効率化ツールについてのご質問・ご相談を承っております。',
+  openGraph: {
+    title: 'お問い合わせ | 零元創匠',
+    description: '零元創匠へのお問い合わせはこちらから。Web開発、ブロックチェーン開発、業務効率化ツールについてのご質問・ご相談を承っております。',
+    url: 'https://www.reigen-soushou.com/contact',
+    type: 'website',
+  },
+};
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -184,9 +197,44 @@ export default function ContactPage() {
       className="min-h-screen pt-28 pb-20 bg-gradient-to-b from-background to-muted/30"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+        {/* Schema.org ContactPage マークアップを追加 */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ContactPage",
+              "name": "零元創匠 お問い合わせページ",
+              "description": "零元創匠へのお問い合わせはこちらから。Web開発、ブロックチェーン開発、業務効率化ツールについてのご質問・ご相談を承っております。",
+              "url": "https://www.reigen-soushou.com/contact",
+              "mainEntity": {
+                "@type": "Organization",
+                "name": "零元創匠",
+                "email": "reigen.soushou@gmail.com",
+                "contactPoint": {
+                  "@type": "ContactPoint",
+                  "contactType": "customer service",
+                  "email": "reigen.soushou@gmail.com",
+                  "availableLanguage": {
+                    "@type": "Language",
+                    "name": "Japanese"
+                  }
+                }
+              }
+            })
+          }}
+        />
+
         {/* 装飾的な背景要素 */}
         <div className="absolute -top-40 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-70 pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl opacity-50 pointer-events-none" />
+        
+        {/* パンくずリスト */}
+        <BreadcrumbNav
+          items={[
+            { title: 'お問い合わせ', href: '/contact', isCurrent: true }
+          ]}
+        />
         
         <motion.div 
           variants={fadeInUp}
