@@ -1,45 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, ExternalLink, Check } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { BreadcrumbNav } from "@/components/breadcrumb-nav";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: '実績・開発事例 | 零元創匠',
-  description: '零元創匠の開発実績とプロジェクト事例をご紹介します。Web開発、ブロックチェーン開発、業務効率化ツールの開発実績があります。',
-  openGraph: {
-    title: '実績・開発事例 | 零元創匠',
-    description: '零元創匠の開発実績とプロジェクト事例をご紹介します。Web開発、ブロックチェーン開発、業務効率化ツールの開発実績があります。',
-    url: 'https://www.reigen-soushou.com/works',
-    type: 'website',
-  },
-};
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
-  }
-};
-
-const staggerContainer = {
-  visible: {
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-};
+import { fadeInUp, staggerContainer } from "@/constants/animations";
 
 export default function WorksPage() {
   const launchProjects = [

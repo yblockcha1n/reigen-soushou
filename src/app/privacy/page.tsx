@@ -3,41 +3,10 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Shield, Database, AlertCircle, Lock, ArrowLeft, Mail, Phone, FileText } from "lucide-react";
+import { Shield, Database, AlertCircle, Lock, ArrowLeft, Mail, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BreadcrumbNav } from "@/components/breadcrumb-nav";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: 'プライバシーポリシー | 零元創匠',
-  description: '零元創匠のプライバシーポリシーをご案内します。個人情報の取り扱いについて定めています。',
-  openGraph: {
-    title: 'プライバシーポリシー | 零元創匠',
-    description: '零元創匠のプライバシーポリシーをご案内します。個人情報の取り扱いについて定めています。',
-    url: 'https://www.reigen-soushou.com/privacy',
-    type: 'website',
-  },
-};
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
-  }
-};
-
-const staggerContainer = {
-  visible: {
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+import { fadeInUp, staggerContainer } from "@/constants/animations";
 
 export default function PrivacyPage() {
   const privacyItems = [
