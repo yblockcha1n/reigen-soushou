@@ -6,26 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { Info, Mail, MapPin, CreditCard, Clock, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BreadcrumbNav } from "@/components/breadcrumb-nav";
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
-  }
-};
-
-const staggerContainer = {
-  visible: {
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+import { fadeInUp, staggerContainer } from "@/constants/animations";
 
 export default function LegalPage() {
   const legalItems = [
@@ -41,7 +22,7 @@ export default function LegalPage() {
     },
     {
       title: "所在地",
-      content: "※ 取引時に共有させていただきます",
+      content: "宮城県仙台市若林区蒲町14-22 ルミナーレK",
       icon: <MapPin className="h-5 w-5" />
     },
     {

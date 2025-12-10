@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Mail, 
-  Send, 
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import {
+  Mail,
+  Send,
   ArrowLeft,
   CheckCircle,
   AlertCircle,
@@ -12,84 +12,37 @@ import {
   MessageSquare,
   FileText,
   Clock,
-  User
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
-} from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from '@/components/ui/select';
+  User,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/components/ui/alert";
-import Link from 'next/link';
-import { Badge } from '@/components/ui/badge';
-import { BreadcrumbNav } from '@/components/breadcrumb-nav';
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
-  }
-};
-
-const fadeInLeft = {
-  hidden: { opacity: 0, x: 30 },
-  visible: { 
-    opacity: 1, 
-    x: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
-  }
-};
-
-const fadeInRight = {
-  hidden: { opacity: 0, x: -30 },
-  visible: { 
-    opacity: 1, 
-    x: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
-  }
-};
-
-const staggerContainer = {
-  visible: {
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { BreadcrumbNav } from "@/components/breadcrumb-nav";
+import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer } from "@/constants/animations";
+import type { ContactFormData, ContactApiResponse } from "@/types";
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: '',
+  const [formData, setFormData] = useState<ContactFormData>({
+    name: "",
     email: '',
     type: '',
     message: ''
@@ -149,28 +102,31 @@ export default function ContactPage() {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const data: ContactApiResponse = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || 'お問い合わせの送信に失敗しました');
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "お問い合わせの送信に失敗しました");
       }
 
       setSubmitStatus({
         success: true,
-        message: 'お問い合わせを送信しました。24時間以内にご返信いたします。'
+        message: "お問い合わせを送信しました。24時間以内にご返信いたします。",
       });
-      
-      // フォームをリセット
+
       setFormData({
-        name: '',
-        email: '',
-        type: '',
-        message: ''
+        name: "",
+        email: "",
+        type: "",
+        message: "",
       });
-    } catch (error: any) {
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "お問い合わせの送信に失敗しました。しばらく経ってからお試しください。";
       setSubmitStatus({
         success: false,
-        message: error.message || 'お問い合わせの送信に失敗しました。しばらく経ってからお試しください。'
+        message,
       });
     } finally {
       setIsSubmitting(false);
