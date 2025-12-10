@@ -3,29 +3,10 @@
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Shield, Database, AlertCircle, Lock, ArrowLeft, Mail, Phone, FileText } from "lucide-react";
+import { Shield, Database, AlertCircle, Lock, ArrowLeft, Mail, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BreadcrumbNav } from "@/components/breadcrumb-nav";
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
-  }
-};
-
-const staggerContainer = {
-  visible: {
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+import { fadeInUp, staggerContainer } from "@/constants/animations";
 
 export default function PrivacyPage() {
   const privacyItems = [
