@@ -1,33 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, ExternalLink, Check } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { BreadcrumbNav } from "@/components/breadcrumb-nav";
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
-  }
-};
-
-const staggerContainer = {
-  visible: {
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-};
+import { fadeInUp, staggerContainer } from "@/constants/animations";
 
 export default function WorksPage() {
   const launchProjects = [
