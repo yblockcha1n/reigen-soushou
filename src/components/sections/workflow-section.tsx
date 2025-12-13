@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { MessageSquare, Layout, Code2, CheckCircle, Rocket } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { fadeInUp, staggerContainer } from "@/constants/animations";
+import { waFadeInUp, nodeStagger, nodeItem, lineDrawAnimation } from "@/constants/animations";
 
 const WORKFLOW_STEPS = [
   {
@@ -48,11 +48,14 @@ export function WorkflowSection({ workflowRef, workflowInView }: WorkflowSection
       ref={workflowRef}
       initial="hidden"
       animate={workflowInView ? "visible" : "hidden"}
-      variants={fadeInUp}
-      className="py-20 bg-background"
+      variants={waFadeInUp}
+      className="section-spacing bg-background relative overflow-hidden"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="max-w-3xl mx-auto text-center mb-16" variants={fadeInUp}>
+      {/* 背景グリッド */}
+      <div className="absolute inset-0 grid-background opacity-30" />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <motion.div className="max-w-3xl mx-auto text-center mb-16" variants={waFadeInUp}>
           <Badge
             variant="outline"
             className="mb-3 bg-primary/10 text-primary border-primary/20 px-3 py-1 text-sm"
@@ -65,19 +68,95 @@ export function WorkflowSection({ workflowRef, workflowInView }: WorkflowSection
           </p>
         </motion.div>
 
-        <motion.div variants={staggerContainer} className="max-w-4xl mx-auto">
+        {/* 横並びフロー（デスクトップ） */}
+        <div className="hidden lg:block max-w-6xl mx-auto">
+          <div className="relative">
+            {/* SVG接続ライン */}
+            <svg
+              className="absolute top-6 left-0 w-full h-2 overflow-visible"
+              preserveAspectRatio="none"
+            >
+              <motion.line
+                x1="10%"
+                y1="0"
+                x2="90%"
+                y2="0"
+                stroke="currentColor"
+                strokeWidth={2}
+                className="text-primary/20"
+                variants={lineDrawAnimation}
+                initial="hidden"
+                animate={workflowInView ? "visible" : "hidden"}
+              />
+            </svg>
+
+            <motion.div
+              variants={nodeStagger}
+              className="grid grid-cols-5 gap-4"
+            >
+              {WORKFLOW_STEPS.map((step, index) => (
+                <motion.div
+                  key={index}
+                  variants={nodeItem}
+                  className="flex flex-col items-center text-center group"
+                >
+                  {/* ノード */}
+                  <div className="relative mb-6">
+                    <motion.div
+                      className="flex items-center justify-center w-12 h-12 rounded-full bg-background border-2 border-primary/30 text-primary z-10 relative transition-all duration-300 group-hover:border-primary group-hover:scale-110"
+                      whileHover={{
+                        boxShadow: "0 0 20px hsl(var(--primary) / 0.3)"
+                      }}
+                    >
+                      {step.icon}
+                    </motion.div>
+                    {/* パルスエフェクト */}
+                    <motion.div
+                      className="absolute inset-0 rounded-full border border-primary/20"
+                      animate={{
+                        scale: [1, 1.5, 1],
+                        opacity: [0.5, 0, 0.5],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: index * 0.3,
+                      }}
+                    />
+                  </div>
+
+                  <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {step.description}
+                  </p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+
+        {/* 縦並びフロー（モバイル・タブレット） */}
+        <motion.div variants={nodeStagger} className="lg:hidden max-w-2xl mx-auto">
           {WORKFLOW_STEPS.map((step, index) => (
             <motion.div
               key={index}
-              variants={fadeInUp}
-              className="relative flex items-start mb-12 last:mb-0"
+              variants={nodeItem}
+              className="relative flex items-start mb-12 last:mb-0 group"
             >
               <div className="flex flex-col items-center mr-6">
-                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary border border-primary/20 z-10">
+                <motion.div
+                  className="flex items-center justify-center w-12 h-12 rounded-full bg-background border-2 border-primary/30 text-primary z-10 transition-all duration-300 group-hover:border-primary"
+                  whileHover={{ scale: 1.1 }}
+                >
                   {step.icon}
-                </div>
+                </motion.div>
                 {index !== WORKFLOW_STEPS.length - 1 && (
-                  <div className="w-px h-full bg-border/60 absolute top-12 bottom-0 left-6" />
+                  <motion.div
+                    className="w-px bg-primary/20 absolute top-14 bottom-0 left-6"
+                    initial={{ height: 0 }}
+                    animate={workflowInView ? { height: "100%" } : { height: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.2 }}
+                  />
                 )}
               </div>
 
