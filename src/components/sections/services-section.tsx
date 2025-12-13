@@ -13,7 +13,8 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { fadeInUp, staggerContainer } from "@/constants/animations";
+import { waFadeInUp, staggerContainer } from "@/constants/animations";
+import { VerticalLabel } from "@/components/typography";
 
 const SERVICES = [
   {
@@ -69,11 +70,17 @@ export function ServicesSection({ servicesRef, servicesInView }: ServicesSection
       ref={servicesRef}
       initial="hidden"
       animate={servicesInView ? "visible" : "hidden"}
-      variants={fadeInUp}
-      className="py-20 bg-muted/30"
+      variants={waFadeInUp}
+      className="section-spacing bg-muted/30 relative overflow-hidden"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div className="max-w-3xl mx-auto text-center mb-16" variants={fadeInUp}>
+      {/* ドット背景 */}
+      <div className="absolute inset-0 dot-background opacity-50" />
+
+      {/* 縦書きラベル */}
+      <VerticalLabel text="SERVICES" position="right" />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <motion.div className="max-w-3xl mx-auto text-center mb-16" variants={waFadeInUp}>
           <Badge
             variant="outline"
             className="mb-3 bg-primary/10 text-primary border-primary/20 px-3 py-1 text-sm"
@@ -87,19 +94,18 @@ export function ServicesSection({ servicesRef, servicesInView }: ServicesSection
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={staggerContainer}
         >
           {SERVICES.map((service, index) => (
             <motion.div
               key={index}
-              variants={fadeInUp}
-              whileHover={{ y: -5 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              variants={waFadeInUp}
+              className={`${index % 3 === 1 ? "md:mt-8" : ""}`}
             >
-              <Card className="h-full border-border/50 bg-card/50 backdrop-blur-sm hover:shadow-lg transition-all">
+              <Card className="h-full border-border/50 bg-card/50 backdrop-blur-sm card-hover group">
                 <CardContent className="p-6 flex flex-col h-full">
-                  <div className="mb-5 p-3 bg-primary/10 rounded-lg w-fit text-primary">
+                  <div className="mb-5 p-3 bg-primary/10 rounded-lg w-fit text-primary transition-transform group-hover:scale-110">
                     {service.icon}
                   </div>
                   <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
@@ -113,7 +119,7 @@ export function ServicesSection({ servicesRef, servicesInView }: ServicesSection
                           key={idx}
                           className="flex items-center text-sm text-muted-foreground"
                         >
-                          <ChevronRight className="h-4 w-4 mr-2 text-primary flex-shrink-0" />
+                          <ChevronRight className="h-4 w-4 mr-2 text-primary flex-shrink-0 transition-transform group-hover:translate-x-1" />
                           {feature}
                         </li>
                       ))}

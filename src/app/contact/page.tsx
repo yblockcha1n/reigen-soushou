@@ -37,8 +37,10 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { BreadcrumbNav } from "@/components/breadcrumb-nav";
-import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer } from "@/constants/animations";
+import { waFadeInUp, staggerContainer, floatAnimation } from "@/constants/animations";
 import type { ContactFormData, ContactApiResponse } from "@/types";
+import { GridBackground } from "@/components/effects";
+import { VerticalText } from "@/components/typography/VerticalText";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -138,9 +140,22 @@ export default function ContactPage() {
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
-      className="min-h-screen pt-28 pb-20 bg-gradient-to-b from-background to-muted/30"
+      className="min-h-screen pt-28 pb-20 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+      {/* 背景エフェクト */}
+      <GridBackground showDots={true} showLines={false} gridSize={35} className="opacity-20" />
+
+      {/* 縦書きアクセント */}
+      <div className="hidden xl:block absolute left-8 top-1/3 -translate-y-1/2">
+        <VerticalText
+          text="問合"
+          className="text-8xl font-bold text-primary/[0.03]"
+          charClassName="leading-none"
+          staggerDelay={0.3}
+        />
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Schema.org ContactPage マークアップを追加 */}
         <script
           type="application/ld+json"
@@ -169,9 +184,18 @@ export default function ContactPage() {
           }}
         />
 
-        {/* 装飾的な背景要素 */}
-        <div className="absolute -top-40 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-70 pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl opacity-50 pointer-events-none" />
+        {/* 浮遊する装飾要素 */}
+        <motion.div
+          className="absolute -top-40 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-70 pointer-events-none"
+          animate={floatAnimation.animate}
+        />
+        <motion.div
+          className="absolute bottom-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl opacity-50 pointer-events-none"
+          animate={{
+            ...floatAnimation.animate,
+            y: [5, -5, 5],
+          }}
+        />
         
         {/* パンくずリスト */}
         <BreadcrumbNav
@@ -180,8 +204,8 @@ export default function ContactPage() {
           ]}
         />
         
-        <motion.div 
-          variants={fadeInUp}
+        <motion.div
+          variants={waFadeInUp}
           className="max-w-6xl mx-auto mb-12 text-center relative z-10"
         >
           <Badge variant="outline" className="mb-3 bg-primary/10 text-primary border-primary/20 px-3 py-1 text-sm">
@@ -198,11 +222,11 @@ export default function ContactPage() {
 
         <div className="max-w-6xl mx-auto grid md:grid-cols-5 gap-8">
           {/* 左側のコンタクト情報 */}
-          <motion.div 
-            variants={fadeInRight} 
+          <motion.div
+            variants={waFadeInUp}
             className="md:col-span-2"
           >
-            <Card className="bg-card/80 backdrop-blur-sm border-primary/10 shadow-md h-full">
+            <Card className="bg-card/60 backdrop-blur-sm border-border/30 shadow-lg h-full glow">
               <CardHeader className="pb-4">
                 <CardTitle className="text-2xl">お問い合わせ方法</CardTitle>
                 <CardDescription>
@@ -210,47 +234,74 @@ export default function ContactPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 p-3 rounded-full text-primary">
+                <motion.div
+                  className="flex items-start space-x-4"
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <motion.div
+                    className="bg-primary/10 p-3 rounded-full text-primary"
+                    animate={floatAnimation.animate}
+                  >
                     <Mail className="h-6 w-6" />
-                  </div>
+                  </motion.div>
                   <div>
                     <h3 className="font-medium mb-1">Eメール</h3>
                     <p className="text-sm text-muted-foreground mb-1">お問い合わせはこちらから</p>
-                    <a href="mailto:reigen.soushou@gmail.com" className="text-primary font-medium">
+                    <a href="mailto:reigen.soushou@gmail.com" className="text-primary font-medium hover:underline">
                       reigen.soushou@gmail.com
                     </a>
                   </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 p-3 rounded-full text-primary">
+                </motion.div>
+
+                <motion.div
+                  className="flex items-start space-x-4"
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <motion.div
+                    className="bg-primary/10 p-3 rounded-full text-primary"
+                    animate={{
+                      ...floatAnimation.animate,
+                      transition: { ...floatAnimation.animate.transition, delay: 0.3 },
+                    }}
+                  >
                     <MessageSquare className="h-6 w-6" />
-                  </div>
+                  </motion.div>
                   <div>
                     <h3 className="font-medium mb-1">SNS</h3>
                     <p className="text-sm text-muted-foreground mb-1">Twitter/Xでもご連絡いただけます</p>
-                    <a 
-                      href="https://twitter.com/reigen_soushou_" 
-                      target="_blank" 
+                    <a
+                      href="https://twitter.com/reigen_soushou_"
+                      target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary font-medium"
+                      className="text-primary font-medium hover:underline"
                     >
                       @reigen_soushou_
                     </a>
                   </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 p-3 rounded-full text-primary">
+                </motion.div>
+
+                <motion.div
+                  className="flex items-start space-x-4"
+                  whileHover={{ x: 4 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <motion.div
+                    className="bg-primary/10 p-3 rounded-full text-primary"
+                    animate={{
+                      ...floatAnimation.animate,
+                      transition: { ...floatAnimation.animate.transition, delay: 0.6 },
+                    }}
+                  >
                     <Clock className="h-6 w-6" />
-                  </div>
+                  </motion.div>
                   <div>
                     <h3 className="font-medium mb-1">対応時間</h3>
                     <p className="text-sm text-muted-foreground">平日: 9:00 - 18:00</p>
                     <p className="text-sm text-muted-foreground">24時間以内に返信いたします</p>
                   </div>
-                </div>
+                </motion.div>
                 
                 {/* 追加のカード - よくある質問 */}
                 <Card className="border-border/50 mt-8 bg-card/50">
@@ -285,11 +336,11 @@ export default function ContactPage() {
           </motion.div>
 
           {/* 右側のフォーム */}
-          <motion.div 
-            variants={fadeInLeft} 
+          <motion.div
+            variants={waFadeInUp}
             className="md:col-span-3"
           >
-            <Card className="border-primary/10 shadow-lg overflow-hidden bg-card/80 backdrop-blur-sm">
+            <Card className="border-border/30 shadow-lg overflow-hidden bg-card/60 backdrop-blur-sm glow">
               <CardHeader className="bg-muted/30">
                 <div className="flex items-center gap-2 text-primary">
                   <Mail className="h-5 w-5" />
@@ -412,8 +463,8 @@ export default function ContactPage() {
           </motion.div>
         </div>
 
-        <motion.div variants={fadeInUp} className="mt-12 text-center">
-          <Button variant="outline" className="group" asChild>
+        <motion.div variants={waFadeInUp} className="mt-12 text-center">
+          <Button variant="outline" className="group glow-hover" asChild>
             <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
               ホームに戻る

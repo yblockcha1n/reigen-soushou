@@ -7,7 +7,9 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BreadcrumbNav } from "@/components/breadcrumb-nav";
-import { fadeInUp, staggerContainer } from "@/constants/animations";
+import { waFadeInUp, staggerContainer, floatAnimation } from "@/constants/animations";
+import { GridBackground } from "@/components/effects";
+import { VerticalText } from "@/components/typography/VerticalText";
 
 export default function WorksPage() {
   const launchProjects = [
@@ -66,9 +68,35 @@ export default function WorksPage() {
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
-      className="min-h-screen pt-24 pb-20 bg-gradient-to-b from-background to-muted/30"
+      className="min-h-screen pt-24 pb-20 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 背景エフェクト */}
+      <GridBackground showDots={true} showLines={false} gridSize={40} className="opacity-20" />
+
+      {/* 浮遊する装飾要素 */}
+      <motion.div
+        className="absolute -top-40 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-70 pointer-events-none"
+        animate={floatAnimation.animate}
+      />
+      <motion.div
+        className="absolute bottom-1/4 -left-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl opacity-50 pointer-events-none"
+        animate={{
+          ...floatAnimation.animate,
+          y: [5, -5, 5],
+        }}
+      />
+
+      {/* 縦書きアクセント */}
+      <div className="hidden xl:block absolute right-8 top-1/3 -translate-y-1/2">
+        <VerticalText
+          text="実績"
+          className="text-8xl font-bold text-primary/[0.03]"
+          charClassName="leading-none"
+          staggerDelay={0.3}
+        />
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* スキーママークアップ */}
         <script
           type="application/ld+json"
@@ -107,11 +135,17 @@ export default function WorksPage() {
           ]}
         />
         
-        <motion.div 
-          variants={fadeInUp}
+        <motion.div
+          variants={waFadeInUp}
           className="max-w-3xl mx-auto mb-16 text-center"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">実績</h1>
+          <Badge
+            variant="outline"
+            className="mb-3 bg-primary/10 text-primary border-primary/20 px-3 py-1 text-sm"
+          >
+            Works
+          </Badge>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">実績</h1>
           <p className="text-lg text-muted-foreground mb-8">
             私たちが手がけたプロジェクトの一部をご紹介します。技術とビジネスの両面で、クライアントの成功に貢献してきました。
           </p>
@@ -119,20 +153,19 @@ export default function WorksPage() {
         </motion.div>
 
         {/* プロダクトローンチ実績 */}
-        <motion.section variants={fadeInUp} className="mb-24">
+        <motion.section variants={waFadeInUp} className="mb-24">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold mb-3">プロダクトローンチ実績</h2>
             <p className="text-muted-foreground mb-10">商品企画から販売戦略までトータルでサポートした事例</p>
-            
+
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {launchProjects.map((project, index) => (
                 <motion.div
                   key={index}
-                  variants={fadeInUp}
-                  whileHover={{ scale: 1.03 }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                  variants={waFadeInUp}
+                  className="group"
                 >
-                  <Card className="h-full flex flex-col bg-card/50 backdrop-blur-sm border-primary/5 shadow-lg hover:shadow-xl transition-all">
+                  <Card className="h-full flex flex-col bg-card/50 backdrop-blur-sm border-border/30 shadow-lg card-hover glow-hover">
                     <CardHeader>
                       <div className="flex justify-between items-start">
                         <CardTitle className="text-xl font-bold">{project.title}</CardTitle>
@@ -179,19 +212,19 @@ export default function WorksPage() {
         </motion.section>
 
         {/* 受託開発実績 */}
-        <motion.section variants={fadeInUp}>
+        <motion.section variants={waFadeInUp}>
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold mb-3">受託開発実績</h2>
             <p className="text-muted-foreground mb-10">クライアントの要望に応じたカスタムソリューション開発</p>
-            
+
             <div className="space-y-16">
               {developmentProjects.map((project, index) => (
                 <motion.div
                   key={index}
-                  variants={fadeInUp}
+                  variants={waFadeInUp}
                   className="group"
                 >
-                  <Card className="overflow-hidden border-primary/5 bg-card/50 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all">
+                  <Card className="overflow-hidden border-border/30 bg-card/50 backdrop-blur-sm shadow-lg card-hover glow-hover">
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="bg-muted/30 aspect-video flex items-center justify-center p-4">
                         <div className="relative w-full h-full overflow-hidden rounded-md bg-muted">
@@ -242,18 +275,18 @@ export default function WorksPage() {
         </motion.section>
 
         {/* CTA Section */}
-        <motion.section 
-          variants={fadeInUp} 
+        <motion.section
+          variants={waFadeInUp}
           className="mt-24 text-center"
         >
-          <Card className="max-w-3xl mx-auto border-primary/10 bg-primary/5 backdrop-blur-sm shadow-lg">
+          <Card className="max-w-3xl mx-auto border-border/30 bg-card/60 backdrop-blur-sm shadow-lg glow">
             <CardContent className="pt-10 pb-10">
               <h2 className="text-2xl md:text-3xl font-bold mb-4">あなたのプロジェクトも成功させませんか？</h2>
               <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
                 私たちは技術力とビジネス感覚を兼ね備えたチームが、お客様のビジョンを実現します。
                 まずはお気軽にご相談ください。
               </p>
-              <Button size="lg" className="text-lg group" asChild>
+              <Button size="lg" className="text-lg group glow-hover" asChild>
                 <a href="/contact">
                   お問い合わせ
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />

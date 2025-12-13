@@ -4,6 +4,7 @@ import { Noto_Sans_JP } from 'next/font/google';
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import { CursorProvider } from '@/components/CursorProvider';
 
 const notoSansJP = Noto_Sans_JP({ 
   subsets: ['latin'],
@@ -103,6 +104,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
         >
+          <CursorProvider />
           <Header />
           {children}
           <Footer />

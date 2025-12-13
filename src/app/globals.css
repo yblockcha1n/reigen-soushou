@@ -107,3 +107,100 @@
     scroll-behavior: smooth;
   }
 }
+
+/* ========================================
+   和 × テック スタイル
+   ======================================== */
+
+/* カスタムカーソル使用時にデフォルトカーソルを非表示 */
+.custom-cursor-active * {
+  cursor: none !important;
+}
+
+/* 縦書きテキスト */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  letter-spacing: 0.2em;
+}
+
+/* グリッド背景 */
+.grid-background {
+  background-image:
+    linear-gradient(to right, hsl(var(--border) / 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--border) / 0.3) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ドット背景 */
+.dot-background {
+  background-image: radial-gradient(
+    circle,
+    hsl(var(--muted-foreground) / 0.15) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+/* グロー効果 */
+.glow {
+  box-shadow:
+    0 0 20px hsl(var(--primary) / 0.1),
+    0 0 40px hsl(var(--primary) / 0.05);
+}
+
+.glow-hover:hover {
+  box-shadow:
+    0 0 30px hsl(var(--primary) / 0.15),
+    0 0 60px hsl(var(--primary) / 0.08);
+}
+
+.glow-text {
+  text-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+}
+
+/* セクション間の余白（「間」の表現） */
+.section-spacing {
+  padding-top: clamp(80px, 12vh, 160px);
+  padding-bottom: clamp(80px, 12vh, 160px);
+}
+
+/* アニメーション用 will-change */
+.will-animate {
+  will-change: transform, opacity;
+}
+
+/* ノード接続ライン */
+.node-line {
+  stroke-dasharray: 5 5;
+  animation: dash 20s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+/* フェードマスク */
+.fade-mask-bottom {
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+.fade-mask-top {
+  mask-image: linear-gradient(to top, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, black 80%, transparent 100%);
+}
+
+/* カードホバー効果 */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow:
+    0 20px 40px hsl(var(--primary) / 0.08),
+    0 0 0 1px hsl(var(--border) / 0.5);
+}
