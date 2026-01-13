@@ -14,10 +14,10 @@ const notoSansJP = Noto_Sans_JP({
 export const metadata: Metadata = {
   title: {
     template: '%s | 零元創匠',
-    default: '零元創匠 | システム開発・ブロックチェーン開発',
+    default: '零元創匠 | 基幹システム開発・業務システム開発',
   },
-  description: '零から始まるイノベーション。Webアプリケーション開発、ブロックチェーン開発、業務効率化ツールの開発を提供する技術集団です。',
-  keywords: ['Webアプリケーション開発', 'ブロックチェーン開発', '業務効率化ツール', 'システム開発', 'ウェブサイト制作'],
+  description: '零から始まるイノベーション。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供する技術集団です。',
+  keywords: ['基幹システム開発', '業務システム開発', 'Webアプリケーション開発', '業務効率化ツール', 'システム開発', '受託開発'],
   authors: [{ name: '零元創匠' }],
   creator: '零元創匠',
   publisher: '零元創匠',
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
     telephone: true,
   },
   openGraph: {
-    title: '零元創匠 | システム開発・ブロックチェーン開発',
-    description: '零から始まるイノベーション。Webアプリケーション開発、ブロックチェーン開発、業務効率化ツールの開発を提供する技術集団です。',
+    title: '零元創匠 | 基幹システム開発・業務システム開発',
+    description: '零から始まるイノベーション。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供する技術集団です。',
     url: 'https://www.reigen-soushou.com',
     siteName: '零元創匠',
     locale: 'ja_JP',
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '零元創匠 | システム開発・ブロックチェーン開発',
-    description: '零から始まるイノベーション。Webアプリケーション開発、ブロックチェーン開発、業務効率化ツールの開発を提供する技術集団です。',
+    title: '零元創匠 | 基幹システム開発・業務システム開発',
+    description: '零から始まるイノベーション。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供する技術集団です。',
     creator: '@reigen_soushou_',
   },
   robots: {
@@ -80,7 +80,7 @@ export default function RootLayout({
               "@type": "Organization",
               "name": "零元創匠",
               "url": "https://www.reigen-soushou.com",
-              "description": "零から始まるイノベーション。Webアプリケーション開発、ブロックチェーン開発、業務効率化ツールの開発を提供する技術集団です。",
+              "description": "零から始まるイノベーション。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供する技術集団です。",
               "address": {
                 "@type": "PostalAddress",
                 "addressCountry": "JP"

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,54 +12,41 @@ import { GridBackground } from "@/components/effects";
 import { VerticalText } from "@/components/typography/VerticalText";
 
 export default function WorksPage() {
-  const launchProjects = [
-    {
-      title: "暗号通貨系ツール",
-      sales: "約1,000万",
-      price: "398,000円",
-      commission: "売上10%",
-      type: "BE商材",
-      results: ["プレセールス段階で600件の成約", "3ヶ月でROI 250%達成", "顧客満足度95%以上"]
-    },
-    {
-      title: "暗号通貨系ツール",
-      sales: "約500万",
-      price: "298,000円",
-      commission: "粗利20%",
-      type: "FE商材",
-      results: ["初月で300件の成約", "広告費回収率180%", "リピート購入率35%"]
-    },
-    {
-      title: "無在庫物販ツール",
-      sales: "約1,500万",
-      price: "198,000円",
-      commission: "粗利15%",
-      type: "FE商材",
-      results: ["業界平均の2倍の販売効率", "自動化により運用コスト70%削減", "初心者でも1ヶ月で利益創出"]
-    }
-  ];
-
   const developmentProjects = [
     {
-      title: "pump.funのクローンサイト開発",
-      description: "暗号資産取引プラットフォームのクローンサイトを開発。高度なセキュリティと安定性を実現。",
-      technologies: ["Next.js", "TypeScript", "Web3.js", "Smart Contract", "Firebase"],
+      title: "製造業向け生産管理システム",
+      description: "製造業のお客様向けに、生産計画から在庫管理、品質管理までを一元化した基幹システムを開発。業務効率の大幅な向上を実現しました。",
+      technologies: ["Next.js", "TypeScript", "PostgreSQL", "Docker", "AWS"],
       image: "/placeholder-image-1.jpg",
-      features: ["高速トランザクション処理", "多層セキュリティ設計", "直感的なユーザーインターフェース"]
+      features: ["リアルタイム生産状況モニタリング", "在庫の自動発注機能", "品質トレーサビリティ管理"]
     },
     {
-      title: "エアドロップツールの開発",
-      description: "暗号資産の自動配布システムを開発。大規模なトークン配布を効率的に実行。",
-      technologies: ["Solidity", "React", "Node.js", "ERC-20", "AWS"],
+      title: "卸売業向け販売管理システム",
+      description: "複数拠点を持つ卸売業のお客様向けに、受発注から請求・入金管理までを統合した販売管理システムを構築しました。",
+      technologies: ["React", "Node.js", "MySQL", "Redis", "GCP"],
       image: "/placeholder-image-2.jpg",
-      features: ["ガス最適化アルゴリズム", "不正防止機能", "マルチチェーン対応"]
+      features: ["複数拠点のリアルタイム在庫連携", "取引先別与信管理", "売上分析ダッシュボード"]
     },
     {
-      title: "フラッシュローンを用いたアトミックコントラの開発",
-      description: "DeFiプロトコルにおける複雑な取引を単一のトランザクションで実行するスマートコントラクトを開発。",
-      technologies: ["Solidity", "Hardhat", "Ethers.js", "Uniswap", "Aave"],
+      title: "人材派遣業向け勤怠・給与システム",
+      description: "人材派遣会社のお客様向けに、派遣スタッフの勤怠管理から給与計算、請求書発行までを自動化するシステムを開発しました。",
+      technologies: ["Vue.js", "Python", "PostgreSQL", "Docker", "Azure"],
       image: "/placeholder-image-3.jpg",
-      features: ["0.5秒以内の処理完了", "複数DEX間の最適化ルーティング", "失敗時の自動ロールバック"]
+      features: ["スマホ対応の勤怠打刻", "複雑な給与計算の自動化", "派遣先別の請求書自動生成"]
+    },
+    {
+      title: "不動産業向け物件管理システム",
+      description: "不動産管理会社のお客様向けに、物件情報管理から契約管理、入居者対応までを効率化するシステムを構築しました。",
+      technologies: ["Next.js", "TypeScript", "Supabase", "Vercel"],
+      image: "/placeholder-image-4.jpg",
+      features: ["物件情報の一元管理", "契約更新の自動リマインド", "入居者ポータル機能"]
+    },
+    {
+      title: "EC事業者向け受注管理システム",
+      description: "複数のECモールに出店するお客様向けに、受注の一元管理と在庫連携、出荷指示までを統合したシステムを開発しました。",
+      technologies: ["React", "Node.js", "MongoDB", "AWS Lambda"],
+      image: "/placeholder-image-5.jpg",
+      features: ["マルチモール受注の自動取込", "在庫のリアルタイム同期", "出荷業務の効率化"]
     }
   ];
 
@@ -104,8 +91,8 @@ export default function WorksPage() {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "CollectionPage",
-              "headline": "実績・開発事例 | 零元創匠",
-              "description": "零元創匠の開発実績とプロジェクト事例をご紹介します。Web開発、ブロックチェーン開発、業務効率化ツールの開発実績があります。",
+              "headline": "開発実績 | 零元創匠",
+              "description": "零元創匠の開発実績をご紹介します。基幹システム開発、業務システム開発、Webアプリケーション開発の実績があります。",
               "url": "https://www.reigen-soushou.com/works",
               "mainEntity": {
                 "@type": "ItemList",
@@ -116,7 +103,7 @@ export default function WorksPage() {
                     "@type": "SoftwareApplication",
                     "name": project.title,
                     "description": project.description,
-                    "applicationCategory": "DeveloperApplication",
+                    "applicationCategory": "BusinessApplication",
                     "offers": {
                       "@type": "Offer",
                       "availability": "https://schema.org/InStock"
@@ -131,10 +118,10 @@ export default function WorksPage() {
         {/* パンくずリスト */}
         <BreadcrumbNav
           items={[
-            { title: '実績', href: '/works', isCurrent: true }
+            { title: '開発実績', href: '/works', isCurrent: true }
           ]}
         />
-        
+
         <motion.div
           variants={waFadeInUp}
           className="max-w-3xl mx-auto mb-16 text-center"
@@ -145,77 +132,19 @@ export default function WorksPage() {
           >
             Works
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">実績</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">開発実績</h1>
           <p className="text-lg text-muted-foreground mb-8">
-            私たちが手がけたプロジェクトの一部をご紹介します。技術とビジネスの両面で、クライアントの成功に貢献してきました。
+            私たちが手がけた基幹システム・業務システムの開発事例をご紹介します。<br />
+            お客様の業務課題を解決し、ビジネスの成長に貢献してきました。
           </p>
           <Separator className="max-w-md mx-auto" />
         </motion.div>
-
-        {/* プロダクトローンチ実績 */}
-        <motion.section variants={waFadeInUp} className="mb-24">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold mb-3">プロダクトローンチ実績</h2>
-            <p className="text-muted-foreground mb-10">商品企画から販売戦略までトータルでサポートした事例</p>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {launchProjects.map((project, index) => (
-                <motion.div
-                  key={index}
-                  variants={waFadeInUp}
-                  className="group"
-                >
-                  <Card className="h-full flex flex-col bg-card/50 backdrop-blur-sm border-border/30 shadow-lg card-hover glow-hover">
-                    <CardHeader>
-                      <div className="flex justify-between items-start">
-                        <CardTitle className="text-xl font-bold">{project.title}</CardTitle>
-                        <Badge variant="outline" className="bg-primary/10 text-primary">
-                          {project.type}
-                        </Badge>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="flex-1 flex flex-col">
-                      <div className="grid grid-cols-2 gap-4 mb-6">
-                        <div>
-                          <p className="text-sm text-muted-foreground">売上</p>
-                          <p className="font-semibold">{project.sales}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-muted-foreground">単価</p>
-                          <p className="font-semibold">{project.price}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-muted-foreground">報酬率</p>
-                          <p className="font-semibold">{project.commission}</p>
-                        </div>
-                      </div>
-                      
-                      <Separator className="mb-6" />
-                      
-                      <div className="mt-auto">
-                        <h4 className="font-medium mb-3">成果</h4>
-                        <ul className="space-y-2">
-                          {project.results.map((result, idx) => (
-                            <li key={idx} className="flex text-sm">
-                              <Check className="h-5 w-5 mr-2 text-primary shrink-0" />
-                              <span>{result}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.section>
 
         {/* 受託開発実績 */}
         <motion.section variants={waFadeInUp}>
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold mb-3">受託開発実績</h2>
-            <p className="text-muted-foreground mb-10">クライアントの要望に応じたカスタムソリューション開発</p>
+            <p className="text-muted-foreground mb-10">お客様の業務課題に合わせたオーダーメイドのシステム開発</p>
 
             <div className="space-y-16">
               {developmentProjects.map((project, index) => (
@@ -228,7 +157,6 @@ export default function WorksPage() {
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="bg-muted/30 aspect-video flex items-center justify-center p-4">
                         <div className="relative w-full h-full overflow-hidden rounded-md bg-muted">
-                          {/* ここでnext/imageを使用 */}
                           <div className="w-full h-full relative">
                             <div className="absolute inset-0 flex items-center justify-center bg-muted">
                               <span className="text-sm text-muted-foreground">プロジェクト画像</span>
@@ -236,15 +164,15 @@ export default function WorksPage() {
                           </div>
                         </div>
                       </div>
-                      
+
                       <div className="p-6 flex flex-col">
                         <CardTitle className="text-2xl mb-3">{project.title}</CardTitle>
                         <CardDescription className="text-base mb-6">{project.description}</CardDescription>
-                        
+
                         <div className="mb-6">
                           <h4 className="font-medium mb-3 flex items-center">
                             <Check className="h-5 w-5 mr-2 text-primary" />
-                            主な特徴
+                            主な機能
                           </h4>
                           <ul className="grid grid-cols-1 gap-2 ml-7">
                             {project.features.map((feature, idx) => (
@@ -254,7 +182,7 @@ export default function WorksPage() {
                             ))}
                           </ul>
                         </div>
-                        
+
                         <div className="mt-auto">
                           <h4 className="font-medium mb-3">使用技術</h4>
                           <div className="flex flex-wrap gap-2">
@@ -281,10 +209,10 @@ export default function WorksPage() {
         >
           <Card className="max-w-3xl mx-auto border-border/30 bg-card/60 backdrop-blur-sm shadow-lg glow">
             <CardContent className="pt-10 pb-10">
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">あなたのプロジェクトも成功させませんか？</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">御社の業務課題を解決しませんか？</h2>
               <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-                私たちは技術力とビジネス感覚を兼ね備えたチームが、お客様のビジョンを実現します。
-                まずはお気軽にご相談ください。
+                業務の効率化やシステム化でお困りのことがございましたら、お気軽にご相談ください。<br />
+                お客様の課題に最適なソリューションをご提案いたします。
               </p>
               <Button size="lg" className="text-lg group glow-hover" asChild>
                 <a href="/contact">
