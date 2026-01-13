@@ -12,7 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const navigation = [
   { name: 'ホーム', href: '/' },
   { name: 'サービス', href: '/#services' },
-  { name: '企業理念', href: '/#philosophy' },
+  { name: '私たちについて', href: '/about' },
   { name: '実績', href: '/works' },
   { name: 'お問い合わせ', href: '/contact' },
 ];
