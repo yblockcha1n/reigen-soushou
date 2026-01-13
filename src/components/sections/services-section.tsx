@@ -33,9 +33,9 @@ const SERVICES = [
   },
   {
     icon: <Binary className="h-8 w-8" />,
-    title: "ブロックチェーン開発",
-    description: "分散型台帳技術を活用した、革新的なソリューションを提供します。",
-    features: ["スマートコントラクト", "DApp開発", "NFT実装", "Web3統合"],
+    title: "API連携・システム統合",
+    description: "外部サービスとの連携や既存システムの統合を実現します。",
+    features: ["REST/GraphQL API", "外部サービス連携", "データ移行", "マイクロサービス"],
   },
   {
     icon: <Globe className="h-8 w-8" />,
@@ -51,10 +51,10 @@ const SERVICES = [
   },
   {
     icon: <Rocket className="h-8 w-8" />,
-    title: "プロダクトローンチ支援",
+    title: "保守・運用サポート",
     description:
-      "商品のローンチから販売戦略まで、包括的なサポートを提供します。",
-    features: ["マーケティング戦略", "販売システム構築", "アフィリエイト管理", "実績分析"],
+      "システム導入後の安定稼働を支える、継続的なサポートを提供します。",
+    features: ["24時間監視体制", "定期メンテナンス", "機能追加・改修", "ヘルプデスク対応"],
   },
 ];
 
