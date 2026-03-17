@@ -1,186 +1,158 @@
 "use client";
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Moon, Sun, ExternalLink } from 'lucide-react';
-import { Button } from './ui/button';
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from './ui/sheet';
-import { useTheme } from 'next-themes';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
 
 const navigation = [
   { name: 'ホーム', href: '/' },
-  { name: 'サービス', href: '/#services' },
+  {
+    name: 'サービス ▼',
+    href: '/#services',
+    children: [
+      { name: 'Webアプリケーション開発', href: '/#services' },
+      { name: '業務効率化ツール', href: '/#services' },
+      { name: 'API連携・システム統合', href: '/#services' },
+      { name: 'Webサイト開発', href: '/#services' },
+      { name: '基幹システム開発', href: '/#services' },
+      { name: '保守・運用サポート', href: '/#services' },
+    ],
+  },
   { name: '私たちについて', href: '/about' },
   { name: '実績', href: '/works' },
   { name: 'お問い合わせ', href: '/contact' },
 ];
 
 const legalLinks = [
-  { name: '特定商取引法に基づく表記', href: '/legal' },
-  { name: 'プライバシーポリシー', href: '/privacy' },
+  { name: '特商法', href: '/legal' },
+  { name: 'プライバシー', href: '/privacy' },
 ];
 
 export function Header() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // スクロールイベントを監視
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const isHomePage = pathname === '/';
-    
-    if (href.startsWith('/#') && isHomePage) {
-      const targetId = href.replace('/#', '');
-      const element = document.getElementById(targetId);
-      if (element) {
-        element.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
-      }
-    } else if (href.startsWith('/#') && !isHomePage) {
-      window.location.href = href;
-    } else {
-      window.location.href = href;
-    }
-    
-    setIsOpen(false);
-  };
-
-  // アクティブなリンクかどうかを判定
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
-    if (href.startsWith('/#')) return pathname === '/' && href.includes(pathname);
+    if (href.startsWith('/#')) return pathname === '/';
     return pathname.startsWith(href);
   };
 
-  return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-background/90 backdrop-blur-md shadow-sm' : 'bg-background/40 backdrop-blur-sm'
-    }`}>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo / ブランド */}
-          <Link 
-            href="/" 
-            className="flex items-center text-xl font-bold text-primary transition-transform hover:scale-105 duration-300"
-          >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">零元創匠</span>
-          </Link>
-          
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex md:items-center md:space-x-1 lg:space-x-2">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={(e) => handleSmoothScroll(e, item.href)}
-                className={`relative px-3 py-2 text-sm font-medium rounded-md transition-colors hover:text-primary ${
-                  isActive(item.href) 
-                    ? 'text-primary' 
-                    : 'text-muted-foreground hover:bg-primary/5'
-                }`}
-              >
-                {item.name}
-                {isActive(item.href) && (
-                  <motion.span 
-                    layoutId="activeNav"
-                    className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary"
-                  />
-                )}
-              </Link>
-            ))}
-            
-            {/* テーマ切り替えボタン */}
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="ml-2"
-            >
-              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">テーマを切り替える</span>
-            </Button>
-          </nav>
+  // 外側クリックでドロップダウンを閉じる
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
 
-          {/* Mobile Navigation */}
-          <div className="flex items-center md:hidden">
-            {/* モバイル用テーマ切り替えボタン */}
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="mr-2"
-            >
-              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">テーマを切り替える</span>
-            </Button>
-            
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="ml-1">
-                  <Menu className="h-6 w-6" />
-                  <span className="sr-only">メニューを開く</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" title="零元創匠 メニュー" className="w-[280px] sm:w-[350px] pr-0">
-                <nav className="flex flex-col mt-6">
-                  <div className="space-y-3 mb-6">
-                    {navigation.map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        onClick={(e) => handleSmoothScroll(e, item.href)}
-                        className={`flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors ${
-                          isActive(item.href) 
-                            ? 'text-primary bg-primary/5' 
-                            : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
-                        }`}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
-                  
-                  <div className="pt-6 border-t border-border/40">
-                    <p className="px-3 mb-3 text-xs font-semibold text-muted-foreground">法的情報</p>
-                    {legalLinks.map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        onClick={() => setIsOpen(false)}
-                        className="flex items-center px-3 py-2 text-sm text-muted-foreground hover:text-primary rounded-md transition-colors"
-                      >
-                        <ExternalLink className="h-4 w-4 mr-2 opacity-70" />
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
-                </nav>
-              </SheetContent>
-            </Sheet>
-          </div>
+  return (
+    <header>
+      {/* タイトルバー */}
+      <div className="win95-titlebar">
+        <span>零元創匠 - Microsoft Internet Explorer</span>
+        <span>
+          <span style={{ marginRight: '2px' }}>_</span>
+          <span style={{ marginRight: '2px' }}>□</span>
+          <span>×</span>
+        </span>
+      </div>
+
+      {/* アドレスバー風 */}
+      <div className="win95-raised" style={{ padding: '4px 8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <span style={{ fontSize: '12px', fontWeight: 'bold' }}>アドレス(D):</span>
+        <div className="win95-sunken" style={{ flex: 1, padding: '2px 4px', fontSize: '12px' }}>
+          https://www.reigen-soushou.com{pathname}
         </div>
       </div>
+
+      {/* ナビゲーション */}
+      <nav className="win95-raised" style={{ padding: '4px 8px', display: 'flex', flexWrap: 'wrap', gap: '4px', alignItems: 'center' }} ref={dropdownRef}>
+        {navigation.map((item) => (
+          <div key={item.name} style={{ position: 'relative', display: 'inline-block' }}>
+            {item.children ? (
+              <>
+                <button
+                  className="win95-button"
+                  style={{
+                    fontWeight: isActive(item.href) ? 'bold' : 'normal',
+                    backgroundColor: openDropdown === item.name ? '#d0d0d0' : '#c0c0c0',
+                    border: openDropdown === item.name ? '2px inset #c0c0c0' : '2px outset #c0c0c0',
+                  }}
+                  onClick={() => setOpenDropdown(openDropdown === item.name ? null : item.name)}
+                >
+                  {item.name}
+                </button>
+
+                {openDropdown === item.name && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: '0',
+                    zIndex: 100,
+                    minWidth: '200px',
+                    border: '2px outset #c0c0c0',
+                    backgroundColor: '#c0c0c0',
+                    padding: '2px',
+                  }}>
+                    {item.children.map((child) => (
+                      <Link
+                        key={child.name}
+                        href={child.href}
+                        onClick={() => setOpenDropdown(null)}
+                        style={{
+                          display: 'block',
+                          padding: '4px 8px',
+                          fontSize: '12px',
+                          textDecoration: 'none',
+                          color: '#000000',
+                          backgroundColor: '#c0c0c0',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = '#000080';
+                          e.currentTarget.style.color = '#ffffff';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = '#c0c0c0';
+                          e.currentTarget.style.color = '#000000';
+                        }}
+                      >
+                        {child.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              <Link
+                href={item.href}
+                className="win95-button"
+                style={{
+                  fontWeight: isActive(item.href) ? 'bold' : 'normal',
+                  backgroundColor: isActive(item.href) ? '#d0d0d0' : '#c0c0c0',
+                  textDecoration: 'none',
+                  color: '#000000',
+                }}
+              >
+                {item.name}
+              </Link>
+            )}
+          </div>
+        ))}
+        <span style={{ marginLeft: 'auto', fontSize: '11px', color: '#808080' }}>
+          |{' '}
+          {legalLinks.map((item, index) => (
+            <span key={item.name}>
+              <Link href={item.href} style={{ fontSize: '11px', color: '#808080' }}>{item.name}</Link>
+              {index < legalLinks.length - 1 && ' | '}
+            </span>
+          ))}
+        </span>
+      </nav>
     </header>
   );
 }

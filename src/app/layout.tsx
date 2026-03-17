@@ -1,15 +1,8 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
-import { Noto_Sans_JP } from 'next/font/google';
-import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
-import { CursorProvider } from '@/components/CursorProvider';
-
-const notoSansJP = Noto_Sans_JP({ 
-  subsets: ['latin'],
-  variable: '--font-noto-sans-jp',
-});
+import { AnnouncementPopup } from '@/components/AnnouncementPopup';
 
 export const metadata: Metadata = {
   title: {
@@ -38,7 +31,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: '零元創匠 | 基幹システム開発・業務システム開発',
     description: '零から始まるイノベーション。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供する技術集団です。',
-    creator: '@reigen_soushou_',
   },
   robots: {
     index: true,
@@ -58,10 +50,6 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
-  ],
 }
 
 export default function RootLayout({
@@ -70,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja" suppressHydrationWarning>
+    <html lang="ja">
       <head>
         <script
           type="application/ld+json"
@@ -88,27 +76,17 @@ export default function RootLayout({
               "contactPoint": {
                 "@type": "ContactPoint",
                 "contactType": "customer service",
-                "email": "reigen.soushou@gmail.com"
-              },
-              "sameAs": [
-                "https://twitter.com/reigen_soushou_"
-              ]
+                "email": "negishi-yuto@reigen-soushou.com"
+              }
             })
           }}
         />
       </head>
-      <body className={`${notoSansJP.variable} font-sans antialiased`}>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-        >
-          <CursorProvider />
-          <Header />
-          {children}
-          <Footer />
-        </ThemeProvider>
+      <body>
+        <AnnouncementPopup />
+        <Header />
+        {children}
+        <Footer />
       </body>
     </html>
   );

@@ -1,93 +1,28 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import {
-  Mail,
-  Send,
-  ArrowLeft,
-  CheckCircle,
-  AlertCircle,
-  Loader2,
-  MessageSquare,
-  FileText,
-  Clock,
-  User,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useState } from "react";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { BreadcrumbNav } from "@/components/breadcrumb-nav";
-import { waFadeInUp, staggerContainer, floatAnimation } from "@/constants/animations";
 import type { ContactFormData, ContactApiResponse } from "@/types";
-import { GridBackground } from "@/components/effects";
-import { VerticalText } from "@/components/typography/VerticalText";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
-    email: '',
-    type: '',
-    message: ''
+    email: "",
+    type: "",
+    message: "",
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
     success?: boolean;
     message?: string;
   } | null>(null);
 
-  // モバイルズーム防止のために、フォントサイズを調整
-  useEffect(() => {
-    // モバイルでのズーム防止のためのスタイルを追加
-    const style = document.createElement('style');
-    style.innerHTML = `
-      @media screen and (max-width: 768px) {
-        input, select, textarea {
-          font-size: 16px !important; /* iOS での自動ズームを防止する最小フォントサイズ */
-        }
-        /* セレクトの中身も同様に */
-        .radix-select-content * {
-          font-size: 16px !important;
-        }
-      }
-    `;
-    document.head.appendChild(style);
-
-    // クリーンアップ関数
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
-
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSelectChange = (value: string) => {
-    setFormData(prev => ({ ...prev, type: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -96,11 +31,9 @@ export default function ContactPage() {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
@@ -115,363 +48,246 @@ export default function ContactPage() {
         message: "お問い合わせを送信しました。24時間以内にご返信いたします。",
       });
 
-      setFormData({
-        name: "",
-        email: "",
-        type: "",
-        message: "",
-      });
+      setFormData({ name: "", email: "", type: "", message: "" });
     } catch (error) {
       const message =
         error instanceof Error
           ? error.message
           : "お問い合わせの送信に失敗しました。しばらく経ってからお試しください。";
-      setSubmitStatus({
-        success: false,
-        message,
-      });
+      setSubmitStatus({ success: false, message });
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={staggerContainer}
-      className="min-h-screen pt-28 pb-20 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden"
-    >
-      {/* 背景エフェクト */}
-      <GridBackground showDots={true} showLines={false} gridSize={35} className="opacity-20" />
+    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '8px' }}>
+      {/* Schema.org */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "零元創匠 お問い合わせページ",
+            "description": "零元創匠へのお問い合わせはこちらから。",
+            "url": "https://www.reigen-soushou.com/contact",
+            "mainEntity": {
+              "@type": "Organization",
+              "name": "零元創匠",
+              "email": "negishi-yuto@reigen-soushou.com",
+            }
+          })
+        }}
+      />
 
-      {/* 縦書きアクセント */}
-      <div className="hidden xl:block absolute left-8 top-1/3 -translate-y-1/2">
-        <VerticalText
-          text="問合"
-          className="text-8xl font-bold text-primary/[0.03]"
-          charClassName="leading-none"
-          staggerDelay={0.3}
-        />
-      </div>
+      {/* パンくずリスト */}
+      <p style={{ fontSize: '11px', marginBottom: '8px' }}>
+        <Link href="/">ホーム</Link> &gt; お問い合わせ
+      </p>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Schema.org ContactPage マークアップを追加 */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "ContactPage",
-              "name": "零元創匠 お問い合わせページ",
-              "description": "零元創匠へのお問い合わせはこちらから。基幹システム開発、業務システム開発、Webアプリケーション開発についてのご質問・ご相談を承っております。",
-              "url": "https://www.reigen-soushou.com/contact",
-              "mainEntity": {
-                "@type": "Organization",
-                "name": "零元創匠",
-                "email": "reigen.soushou@gmail.com",
-                "contactPoint": {
-                  "@type": "ContactPoint",
-                  "contactType": "customer service",
-                  "email": "reigen.soushou@gmail.com",
-                  "availableLanguage": {
-                    "@type": "Language",
-                    "name": "Japanese"
-                  }
-                }
-              }
-            })
-          }}
-        />
+      <table style={{ width: '100%', marginBottom: '8px' }}>
+        <tbody>
+          <tr>
+            <td style={{ backgroundColor: '#000080', color: '#ffffff', padding: '4px 8px', fontWeight: 'bold', fontSize: '18px', textAlign: 'center' }}>
+              ■ お問い合わせ ■
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-        {/* 浮遊する装飾要素 */}
-        <motion.div
-          className="absolute -top-40 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-70 pointer-events-none"
-          animate={floatAnimation.animate}
-        />
-        <motion.div
-          className="absolute bottom-0 right-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl opacity-50 pointer-events-none"
-          animate={{
-            ...floatAnimation.animate,
-            y: [5, -5, 5],
-          }}
-        />
-        
-        {/* パンくずリスト */}
-        <BreadcrumbNav
-          items={[
-            { title: 'お問い合わせ', href: '/contact', isCurrent: true }
-          ]}
-        />
-        
-        <motion.div
-          variants={waFadeInUp}
-          className="max-w-6xl mx-auto mb-12 text-center relative z-10"
-        >
-          <Badge variant="outline" className="mb-3 bg-primary/10 text-primary border-primary/20 px-3 py-1 text-sm">
-            Contact
-          </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
-            お問い合わせ
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            弊社のサービスやプロジェクトについてのご質問・ご相談をお待ちしております。24時間以内に返信いたします。
-          </p>
-          <Separator className="max-w-md mx-auto mt-8" />
-        </motion.div>
+      <p style={{ textAlign: 'center', fontSize: '13px', marginBottom: '16px' }}>
+        弊社のサービスやプロジェクトについてのご質問・ご相談をお待ちしております。<br />
+        24時間以内に返信いたします。
+      </p>
 
-        <div className="max-w-6xl mx-auto grid md:grid-cols-5 gap-8">
-          {/* 左側のコンタクト情報 */}
-          <motion.div
-            variants={waFadeInUp}
-            className="md:col-span-2"
-          >
-            <Card className="bg-card/60 backdrop-blur-sm border-border/30 shadow-lg h-full glow">
-              <CardHeader className="pb-4">
-                <CardTitle className="text-2xl">お問い合わせ方法</CardTitle>
-                <CardDescription>
-                  下記の方法でもご連絡いただけます
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <motion.div
-                  className="flex items-start space-x-4"
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <motion.div
-                    className="bg-primary/10 p-3 rounded-full text-primary"
-                    animate={floatAnimation.animate}
-                  >
-                    <Mail className="h-6 w-6" />
-                  </motion.div>
-                  <div>
-                    <h3 className="font-medium mb-1">Eメール</h3>
-                    <p className="text-sm text-muted-foreground mb-1">お問い合わせはこちらから</p>
-                    <a href="mailto:reigen.soushou@gmail.com" className="text-primary font-medium hover:underline">
-                      reigen.soushou@gmail.com
-                    </a>
-                  </div>
-                </motion.div>
+      <hr />
 
-                <motion.div
-                  className="flex items-start space-x-4"
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <motion.div
-                    className="bg-primary/10 p-3 rounded-full text-primary"
-                    animate={{
-                      ...floatAnimation.animate,
-                      transition: { ...floatAnimation.animate.transition, delay: 0.3 },
-                    }}
-                  >
-                    <MessageSquare className="h-6 w-6" />
-                  </motion.div>
-                  <div>
-                    <h3 className="font-medium mb-1">SNS</h3>
-                    <p className="text-sm text-muted-foreground mb-1">Twitter/Xでもご連絡いただけます</p>
-                    <a
-                      href="https://twitter.com/reigen_soushou_"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary font-medium hover:underline"
-                    >
-                      @reigen_soushou_
-                    </a>
-                  </div>
-                </motion.div>
+      <table style={{ width: '100%' }}>
+        <tbody>
+          <tr>
+            {/* 左：連絡先情報 */}
+            <td style={{ width: '35%', verticalAlign: 'top', paddingRight: '12px' }}>
+              <h2 style={{ fontSize: '14px', color: '#000080', fontWeight: 'bold', marginBottom: '8px' }}>
+                ◆ お問い合わせ方法
+              </h2>
 
-                <motion.div
-                  className="flex items-start space-x-4"
-                  whileHover={{ x: 4 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <motion.div
-                    className="bg-primary/10 p-3 rounded-full text-primary"
-                    animate={{
-                      ...floatAnimation.animate,
-                      transition: { ...floatAnimation.animate.transition, delay: 0.6 },
-                    }}
-                  >
-                    <Clock className="h-6 w-6" />
-                  </motion.div>
-                  <div>
-                    <h3 className="font-medium mb-1">対応時間</h3>
-                    <p className="text-sm text-muted-foreground">平日: 9:00 - 18:00</p>
-                    <p className="text-sm text-muted-foreground">24時間以内に返信いたします</p>
-                  </div>
-                </motion.div>
-                
-                {/* 追加のカード - よくある質問 */}
-                <Card className="border-border/50 mt-8 bg-card/50">
-                  <CardHeader className="p-4 pb-2">
-                    <CardTitle className="text-base">よくある質問</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-4 pt-2 text-sm">
-                    <ul className="space-y-2">
-                      <li className="flex items-start">
-                        <div className="mr-2 text-primary flex-shrink-0 mt-1">
-                          <FileText className="h-4 w-4" />
-                        </div>
-                        <span>開発料金の目安を知りたい</span>
-                      </li>
-                      <li className="flex items-start">
-                        <div className="mr-2 text-primary flex-shrink-0 mt-1">
-                          <FileText className="h-4 w-4" />
-                        </div>
-                        <span>開発期間はどのくらい必要か</span>
-                      </li>
-                      <li className="flex items-start">
-                        <div className="mr-2 text-primary flex-shrink-0 mt-1">
-                          <FileText className="h-4 w-4" />
-                        </div>
-                        <span>開発実績を詳しく知りたい</span>
-                      </li>
-                    </ul>
-                  </CardContent>
-                </Card>
-              </CardContent>
-            </Card>
-          </motion.div>
+              <div className="win95-raised" style={{ padding: '8px', marginBottom: '8px' }}>
+                <p style={{ fontWeight: 'bold', fontSize: '12px' }}>✉ Eメール</p>
+                <p style={{ fontSize: '11px', marginBottom: '2px' }}>お問い合わせはこちらから</p>
+                <a href="mailto:negishi-yuto@reigen-soushou.com" style={{ fontSize: '11px' }}>
+                  negishi-yuto@reigen-soushou.com
+                </a>
+              </div>
 
-          {/* 右側のフォーム */}
-          <motion.div
-            variants={waFadeInUp}
-            className="md:col-span-3"
-          >
-            <Card className="border-border/30 shadow-lg overflow-hidden bg-card/60 backdrop-blur-sm glow">
-              <CardHeader className="bg-muted/30">
-                <div className="flex items-center gap-2 text-primary">
-                  <Mail className="h-5 w-5" />
-                  <CardTitle>お問い合わせフォーム</CardTitle>
+              <div className="win95-raised" style={{ padding: '8px', marginBottom: '8px' }}>
+                <p style={{ fontWeight: 'bold', fontSize: '12px' }}>🕐 対応時間</p>
+                <p style={{ fontSize: '11px' }}>平日: 9:00 - 18:00</p>
+                <p style={{ fontSize: '11px' }}>24時間以内に返信いたします</p>
+              </div>
+
+              <div className="win95-raised" style={{ padding: '8px' }}>
+                <p style={{ fontWeight: 'bold', fontSize: '12px', marginBottom: '4px' }}>❓ よくある質問</p>
+                <ul style={{ fontSize: '11px', paddingLeft: '16px', listStyle: 'disc' }}>
+                  <li>開発料金の目安を知りたい</li>
+                  <li>開発期間はどのくらい必要か</li>
+                  <li>開発実績を詳しく知りたい</li>
+                </ul>
+              </div>
+            </td>
+
+            {/* 右：フォーム */}
+            <td style={{ width: '65%', verticalAlign: 'top' }}>
+              <div className="win95-raised" style={{ padding: '2px' }}>
+                <div className="win95-titlebar">
+                  <span>✉ お問い合わせフォーム</span>
                 </div>
-                <CardDescription>
-                  下記フォームに必要事項をご入力の上、送信してください。
-                </CardDescription>
-              </CardHeader>
 
-              <CardContent className="pt-6">
-                {submitStatus && (
-                  <Alert 
-                    className={`mb-6 ${submitStatus.success ? 'bg-green-500/10 text-green-600 dark:text-green-400' : 'bg-destructive/10 text-destructive'}`}
-                  >
-                    {submitStatus.success ? (
-                      <CheckCircle className="h-4 w-4" />
-                    ) : (
-                      <AlertCircle className="h-4 w-4" />
-                    )}
-                    <AlertTitle>{submitStatus.success ? '送信完了' : 'エラー'}</AlertTitle>
-                    <AlertDescription>{submitStatus.message}</AlertDescription>
-                  </Alert>
-                )}
+                <div style={{ backgroundColor: '#ffffff', border: '1px solid #808080', padding: '12px' }}>
+                  <p style={{ fontSize: '12px', color: '#808080', marginBottom: '12px' }}>
+                    下記フォームに必要事項をご入力の上、送信してください。
+                  </p>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name" className="flex items-center">
-                      <User className="h-4 w-4 mr-2" />
-                      お名前 <span className="text-destructive ml-1">*</span>
-                    </Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      placeholder="例: 山田 太郎"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="mobile-input bg-card/50 focus:bg-card/70 transition-colors"
-                    />
-                  </div>
+                  {submitStatus && (
+                    <div style={{
+                      padding: '8px',
+                      marginBottom: '12px',
+                      border: '2px solid',
+                      borderColor: submitStatus.success ? '#008000' : '#ff0000',
+                      backgroundColor: submitStatus.success ? '#e0ffe0' : '#ffe0e0',
+                      fontSize: '13px',
+                    }}>
+                      <strong>{submitStatus.success ? '✓ 送信完了' : '✗ エラー'}</strong>
+                      <br />
+                      {submitStatus.message}
+                    </div>
+                  )}
 
-                  <div className="space-y-2">
-                    <Label htmlFor="email" className="flex items-center">
-                      <Mail className="h-4 w-4 mr-2" />
-                      メールアドレス <span className="text-destructive ml-1">*</span>
-                    </Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="例: example@example.com"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="mobile-input bg-card/50 focus:bg-card/70 transition-colors"
-                    />
-                  </div>
+                  <form onSubmit={handleSubmit}>
+                    <table style={{ width: '100%' }}>
+                      <tbody>
+                        <tr>
+                          <td style={{ padding: '4px', fontSize: '13px', fontWeight: 'bold', verticalAlign: 'top', width: '30%' }}>
+                            お名前 <span style={{ color: '#ff0000' }}>*</span>
+                          </td>
+                          <td style={{ padding: '4px' }}>
+                            <input
+                              type="text"
+                              name="name"
+                              value={formData.name}
+                              onChange={handleChange}
+                              required
+                              className="retro-input"
+                              style={{ width: '100%' }}
+                              placeholder="例: 山田 太郎"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style={{ padding: '4px', fontSize: '13px', fontWeight: 'bold', verticalAlign: 'top' }}>
+                            メールアドレス <span style={{ color: '#ff0000' }}>*</span>
+                          </td>
+                          <td style={{ padding: '4px' }}>
+                            <input
+                              type="email"
+                              name="email"
+                              value={formData.email}
+                              onChange={handleChange}
+                              required
+                              className="retro-input"
+                              style={{ width: '100%' }}
+                              placeholder="例: example@example.com"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style={{ padding: '4px', fontSize: '13px', fontWeight: 'bold', verticalAlign: 'top' }}>
+                            お問い合わせ種類 <span style={{ color: '#ff0000' }}>*</span>
+                          </td>
+                          <td style={{ padding: '4px' }}>
+                            <div className="win95-sunken" style={{ padding: '6px 8px' }}>
+                              {[
+                                "サービスについて",
+                                "お見積り依頼",
+                                "採用について",
+                                "その他のお問い合わせ",
+                              ].map((option) => (
+                                <label
+                                  key={option}
+                                  style={{
+                                    display: 'block',
+                                    padding: '2px 0',
+                                    fontSize: '13px',
+                                    cursor: 'pointer',
+                                  }}
+                                >
+                                  <input
+                                    type="radio"
+                                    name="type"
+                                    value={option}
+                                    checked={formData.type === option}
+                                    onChange={handleChange}
+                                    required
+                                    style={{ marginRight: '6px' }}
+                                  />
+                                  {option}
+                                </label>
+                              ))}
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style={{ padding: '4px', fontSize: '13px', fontWeight: 'bold', verticalAlign: 'top' }}>
+                            お問い合わせ内容
+                          </td>
+                          <td style={{ padding: '4px' }}>
+                            <textarea
+                              name="message"
+                              value={formData.message}
+                              onChange={handleChange}
+                              rows={6}
+                              className="retro-textarea"
+                              style={{ width: '100%' }}
+                              placeholder="お問い合わせ内容を入力してください"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td style={{ padding: '4px' }}>
+                            <button
+                              type="submit"
+                              className="win95-button"
+                              disabled={isSubmitting}
+                              style={{ fontSize: '14px', fontWeight: 'bold', padding: '6px 24px' }}
+                            >
+                              {isSubmitting ? "送信中..." : "▶ 送信する"}
+                            </button>
+                            <button
+                              type="reset"
+                              className="win95-button"
+                              style={{ fontSize: '12px', marginLeft: '8px' }}
+                              onClick={() => setFormData({ name: "", email: "", type: "", message: "" })}
+                            >
+                              リセット
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </form>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="type" className="flex items-center">
-                      <FileText className="h-4 w-4 mr-2" />
-                      お問い合わせ種類 <span className="text-destructive ml-1">*</span>
-                    </Label>
-                    <Select 
-                      value={formData.type} 
-                      onValueChange={handleSelectChange}
-                      required
-                    >
-                      <SelectTrigger className="mobile-input bg-card/50 focus:bg-card/70 transition-colors">
-                        <SelectValue placeholder="お問い合わせの種類を選択してください" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="サービスについて">サービスについて</SelectItem>
-                        <SelectItem value="お見積り依頼">お見積り依頼</SelectItem>
-                        <SelectItem value="採用について">採用について</SelectItem>
-                        <SelectItem value="その他のお問い合わせ">その他のお問い合わせ</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+      <hr />
 
-                  <div className="space-y-2">
-                    <Label htmlFor="message" className="flex items-center">
-                      <MessageSquare className="h-4 w-4 mr-2" />
-                      お問い合わせ内容
-                    </Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      placeholder="お問い合わせ内容を入力してください"
-                      rows={6}
-                      value={formData.message}
-                      onChange={handleChange}
-                      className="mobile-input bg-card/50 focus:bg-card/70 transition-colors resize-none"
-                    />
-                  </div>
-
-                  <div className="pt-2">
-                    <Button 
-                      type="submit" 
-                      className="w-full group relative overflow-hidden bg-gradient-to-r from-primary to-primary/90"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          送信中...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="mr-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                          送信する
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </form>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-
-        <motion.div variants={waFadeInUp} className="mt-12 text-center">
-          <Button variant="outline" className="group glow-hover" asChild>
-            <Link href="/">
-              <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-              ホームに戻る
-            </Link>
-          </Button>
-        </motion.div>
-      </div>
-    </motion.div>
+      <p style={{ textAlign: 'center', marginBottom: '16px' }}>
+        [<Link href="/">ホームに戻る</Link>]
+      </p>
+    </div>
   );
 }
