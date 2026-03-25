@@ -1,7 +1,7 @@
-"use client";
-
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { FaqAccordion } from "@/components/FaqAccordion";
+import { HitCounter } from "@/components/HitCounter";
+import { MarqueeText } from "@/components/MarqueeText";
 
 const HOME_FAQS = [
   {
@@ -72,90 +72,128 @@ const WORKFLOW_STEPS = [
   { num: "5", title: "デプロイ・サポート", description: "円滑なリリースとその後の持続的なサポートで、安心してご利用いただけます。" },
 ];
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": HOME_FAQS.map(faq => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer
+    }
+  }))
+};
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "零元創匠のシステム開発サービス",
+  "description": "零元創匠が提供するシステム開発サービスの一覧です。基幹システム開発からWebアプリケーション開発、保守・運用サポートまで対応しています。",
+  "numberOfItems": SERVICES.length,
+  "itemListElement": SERVICES.map((service, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "item": {
+      "@type": "Service",
+      "name": service.title,
+      "description": service.description,
+      "provider": {
+        "@type": "Organization",
+        "@id": "https://www.reigen-soushou.com/#organization"
+      }
+    }
+  }))
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "零元創匠のシステム開発フロー",
+  "description": "零元創匠では、要件ヒアリングから設計、開発、テスト、デプロイまで5段階の開発プロセスで高品質なシステムを提供しています。",
+  "step": WORKFLOW_STEPS.map((step) => ({
+    "@type": "HowToStep",
+    "position": parseInt(step.num),
+    "name": step.title,
+    "text": step.description
+  }))
+};
+
 export default function Home() {
-  const [visitorCount, setVisitorCount] = useState("000000");
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-
-  useEffect(() => {
-    const count = Math.floor(Math.random() * 9999) + 10000;
-    setVisitorCount(count.toString().padStart(6, "0"));
-  }, []);
-
   return (
     <main style={{ maxWidth: '800px', margin: '0 auto', padding: '8px' }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
+
       {/* ========== ヒーローセクション ========== */}
-      <div className="win95-raised" style={{ padding: '8px', marginBottom: '16px' }}>
-        <div style={{ textAlign: 'center', padding: '16px', backgroundColor: '#ffffff', border: '1px solid #808080' }}>
-          <p style={{ fontSize: '10px', marginBottom: '4px' }}>
-            <span className="star">★</span> ようこそ！ <span className="star">★</span>
-          </p>
-          <h1 style={{ fontSize: '32px', color: '#000080', marginBottom: '8px' }}>
-            ～ 零 元 創 匠 ～
-          </h1>
-          <div style={{ overflow: 'hidden', marginBottom: '8px' }}>
-            <p className="marquee-text rainbow-text" style={{ fontSize: '16px' }}>
-              ★☆★ 零から始まるイノベーション ～ 零から創る未来の可能性 ～ 零から紡ぐデジタル世界 ★☆★
+      <section aria-label="零元創匠について">
+        <div className="win95-raised" style={{ padding: '8px', marginBottom: '16px' }}>
+          <div style={{ textAlign: 'center', padding: '16px', backgroundColor: '#ffffff', border: '1px solid #808080' }}>
+            <p style={{ fontSize: '10px', marginBottom: '4px' }}>
+              <span className="star">★</span> ようこそ！ <span className="star">★</span>
             </p>
-          </div>
-          <p style={{ fontSize: '14px', marginBottom: '12px' }}>
-            世界はすべて「0」から始まります。<br />
-            私たちは、その無限の可能性から、新たな価値を創造する技術集団です。
-          </p>
-          <p style={{ marginBottom: '8px' }}>
-            <span className="blink new-badge">NEW!</span>{' '}
-            <span style={{ fontSize: '12px' }}>サイトをリニューアルしました！</span>
-          </p>
+            <h1 style={{ fontSize: '32px', color: '#000080', marginBottom: '8px' }}>
+              ～ 零 元 創 匠 ～
+            </h1>
+            <MarqueeText>
+              ★☆★ 零から始まるイノベーション ～ 零から創る未来の可能性 ～ 零から紡ぐデジタル世界 ★☆★
+            </MarqueeText>
+            <p style={{ fontSize: '14px', marginBottom: '12px' }}>
+              零元創匠は東京都新宿区のシステム開発会社です。<br />
+              基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供しています。
+            </p>
+            <p style={{ marginBottom: '8px' }}>
+              <span className="blink new-badge">NEW!</span>{' '}
+              <span style={{ fontSize: '12px' }}>サイトをリニューアルしました！</span>
+            </p>
 
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '12px' }}>
-            <Link href="/contact" className="win95-button" style={{ fontSize: '14px', fontWeight: 'bold' }}>
-              ▶ お問い合わせ
-            </Link>
-            <Link href="/works" className="win95-button" style={{ fontSize: '14px' }}>
-              ▶ 実績を見る
-            </Link>
-          </div>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '12px' }}>
+              <Link href="/contact" className="win95-button" style={{ fontSize: '14px', fontWeight: 'bold' }}>
+                ▶ お問い合わせ
+              </Link>
+              <Link href="/works" className="win95-button" style={{ fontSize: '14px' }}>
+                ▶ 実績を見る
+              </Link>
+            </div>
 
-          <hr />
-          <table style={{ margin: '0 auto', borderCollapse: 'collapse' }}>
-            <tbody>
-              <tr>
-                <td style={{ padding: '4px 12px', fontSize: '12px', textAlign: 'center' }}>
-                  ✓ 高いエンジニアリング品質
-                </td>
-                <td style={{ padding: '4px 12px', fontSize: '12px', textAlign: 'center' }}>
-                  ✓ 迅速な開発・納品
-                </td>
-                <td style={{ padding: '4px 12px', fontSize: '12px', textAlign: 'center' }}>
-                  ✓ 伴走型のサポート
-                </td>
-              </tr>
-            </tbody>
-          </table>
+            <hr />
+            <dl style={{ display: 'flex', justifyContent: 'center', gap: '24px', flexWrap: 'wrap', margin: 0 }}>
+              <dd style={{ margin: 0, fontSize: '12px', textAlign: 'center' }}>✓ 高いエンジニアリング品質</dd>
+              <dd style={{ margin: 0, fontSize: '12px', textAlign: 'center' }}>✓ 迅速な開発・納品</dd>
+              <dd style={{ margin: 0, fontSize: '12px', textAlign: 'center' }}>✓ 伴走型のサポート</dd>
+            </dl>
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* ========== ヒットカウンター ========== */}
-      <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-        <span style={{ fontSize: '11px' }}>あなたは</span>{' '}
-        <span className="hit-counter">{visitorCount}</span>{' '}
-        <span style={{ fontSize: '11px' }}>人目のお客様です</span>
-      </div>
+      <HitCounter />
 
       <div className="retro-separator">- * - * - * - * - * - * - * - * -</div>
 
       {/* ========== サービスセクション ========== */}
-      <div id="services">
+      <section id="services" aria-label="サービス内容">
         <table style={{ width: '100%', marginBottom: '8px' }}>
           <tbody>
             <tr>
               <td style={{ backgroundColor: '#000080', color: '#ffffff', padding: '4px 8px', fontWeight: 'bold', fontSize: '16px' }}>
-                ■ サービス内容
+                <h2 style={{ fontSize: '16px', margin: 0, color: '#ffffff' }}>■ サービス内容</h2>
               </td>
             </tr>
           </tbody>
         </table>
         <p style={{ fontSize: '13px', marginBottom: '12px', textAlign: 'center' }}>
-          私たちは、最新のテクノロジーとノウハウを駆使し、お客様のビジネスに最適なソリューションを提供します。
+          零元創匠は、最新のテクノロジーとノウハウを駆使し、お客様のビジネスに最適なシステム開発ソリューションを提供します。基幹システム開発からWebアプリケーション開発、業務効率化ツール開発、保守・運用まで一貫対応しています。
         </p>
 
         <table className="retro-table" style={{ marginBottom: '16px' }}>
@@ -182,23 +220,23 @@ export default function Home() {
             ))}
           </tbody>
         </table>
-      </div>
+      </section>
 
       <div className="retro-separator">- * - * - * - * - * - * - * - * -</div>
 
       {/* ========== 開発フローセクション ========== */}
-      <div>
+      <section aria-label="開発フロー">
         <table style={{ width: '100%', marginBottom: '8px' }}>
           <tbody>
             <tr>
               <td style={{ backgroundColor: '#000080', color: '#ffffff', padding: '4px 8px', fontWeight: 'bold', fontSize: '16px' }}>
-                ■ 開発フロー
+                <h2 style={{ fontSize: '16px', margin: 0, color: '#ffffff' }}>■ 開発フロー</h2>
               </td>
             </tr>
           </tbody>
         </table>
         <p style={{ fontSize: '13px', marginBottom: '12px', textAlign: 'center' }}>
-          私たちは効率的で透明性の高い開発プロセスを採用しています。
+          零元創匠では、要件ヒアリングから設計、開発、テスト、デプロイまで5段階の透明性の高い開発プロセスを採用しています。お客様と密にコミュニケーションを取りながら進めます。
         </p>
 
         <table style={{ margin: '0 auto', borderCollapse: 'collapse', marginBottom: '16px' }}>
@@ -228,17 +266,17 @@ export default function Home() {
             ))}
           </tbody>
         </table>
-      </div>
+      </section>
 
       <div className="retro-separator">- * - * - * - * - * - * - * - * -</div>
 
       {/* ========== 企業理念セクション ========== */}
-      <div id="philosophy">
+      <section id="philosophy" aria-label="企業理念">
         <table style={{ width: '100%', marginBottom: '8px' }}>
           <tbody>
             <tr>
               <td style={{ backgroundColor: '#000080', color: '#ffffff', padding: '4px 8px', fontWeight: 'bold', fontSize: '16px' }}>
-                ■ 企業理念
+                <h2 style={{ fontSize: '16px', margin: 0, color: '#ffffff' }}>■ 企業理念</h2>
               </td>
             </tr>
           </tbody>
@@ -284,79 +322,34 @@ export default function Home() {
             </tr>
           </tbody>
         </table>
-      </div>
+      </section>
 
       <div className="retro-separator">- * - * - * - * - * - * - * - * -</div>
 
       {/* ========== FAQセクション ========== */}
-      <div id="faq">
+      <section id="faq" aria-label="よくある質問">
         <table style={{ width: '100%', marginBottom: '8px' }}>
           <tbody>
             <tr>
               <td style={{ backgroundColor: '#000080', color: '#ffffff', padding: '4px 8px', fontWeight: 'bold', fontSize: '16px' }}>
-                ■ よくある質問（FAQ）
+                <h2 style={{ fontSize: '16px', margin: 0, color: '#ffffff' }}>■ よくある質問（FAQ）</h2>
               </td>
             </tr>
           </tbody>
         </table>
 
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              "mainEntity": HOME_FAQS.map(faq => ({
-                "@type": "Question",
-                "name": faq.question,
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": faq.answer
-                }
-              }))
-            })
-          }}
-        />
-
-        <div style={{ marginBottom: '16px' }}>
-          {HOME_FAQS.map((faq, index) => (
-            <div key={index} className="win95-raised" style={{ marginBottom: '4px', padding: '2px' }}>
-              <div
-                style={{
-                  padding: '6px 8px',
-                  cursor: 'pointer',
-                  backgroundColor: openFaq === index ? '#d0d0d0' : '#c0c0c0',
-                  fontWeight: 'bold',
-                  fontSize: '13px',
-                }}
-                onClick={() => setOpenFaq(openFaq === index ? null : index)}
-              >
-                {openFaq === index ? '▼' : '▶'} Q: {faq.question}
-              </div>
-              {openFaq === index && (
-                <div style={{
-                  padding: '8px',
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #808080',
-                  fontSize: '13px',
-                }}>
-                  <strong>A:</strong> {faq.answer}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+        <FaqAccordion faqs={HOME_FAQS} />
+      </section>
 
       <div className="retro-separator">- * - * - * - * - * - * - * - * -</div>
 
       {/* ========== お問い合わせセクション ========== */}
-      <div id="contact">
+      <section id="contact" aria-label="お問い合わせ">
         <table style={{ width: '100%', marginBottom: '8px' }}>
           <tbody>
             <tr>
               <td style={{ backgroundColor: '#000080', color: '#ffffff', padding: '4px 8px', fontWeight: 'bold', fontSize: '16px' }}>
-                ■ お問い合わせ
+                <h2 style={{ fontSize: '16px', margin: 0, color: '#ffffff' }}>■ お問い合わせ</h2>
               </td>
             </tr>
           </tbody>
@@ -365,7 +358,7 @@ export default function Home() {
         <div className="retro-card">
           <div className="retro-card-inner" style={{ textAlign: 'center' }}>
             <p style={{ fontSize: '14px', marginBottom: '12px' }}>
-              ご質問やプロジェクトのご相談など、お気軽にお問い合わせください。<br />
+              零元創匠へのご質問やプロジェクトのご相談など、お気軽にお問い合わせください。<br />
               24時間以内に返信いたします。
             </p>
 
@@ -398,21 +391,21 @@ export default function Home() {
             </table>
           </div>
         </div>
-      </div>
+      </section>
 
       <div className="retro-separator">- * - * - * - * - * - * - * - * -</div>
 
       {/* 最終更新 */}
-      <div style={{ textAlign: 'center', fontSize: '11px', color: '#808080', marginBottom: '16px' }}>
+      <footer style={{ textAlign: 'center', fontSize: '11px', color: '#808080', marginBottom: '16px' }}>
         <p>
           <span className="star">☆</span>{' '}
-          Last updated: 2025/03/24{' '}
+          Last updated: 2025/03/25{' '}
           <span className="star">☆</span>
         </p>
         <p style={{ marginTop: '4px' }}>
           <span className="star">★</span> このサイトはリンクフリーです <span className="star">★</span>
         </p>
-      </div>
+      </footer>
     </main>
   );
 }
