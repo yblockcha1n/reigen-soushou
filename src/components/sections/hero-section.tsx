@@ -107,6 +107,9 @@ export function HeroSection({ heroRef, heroInView }: HeroSectionProps) {
                     零元創匠
                   </span>
                 </h1>
+                <p className="text-sm md:text-base text-muted-foreground/60 mt-1 tracking-widest font-light">
+                  れいげんそうしょう — Reigen Soushou
+                </p>
               </motion.div>
 
               {/* 動的スローガン */}

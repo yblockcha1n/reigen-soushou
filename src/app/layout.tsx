@@ -9,8 +9,8 @@ export const metadata: Metadata = {
     template: '%s | 零元創匠',
     default: '零元創匠 | 基幹システム開発・業務システム開発',
   },
-  description: '零元創匠は東京都新宿区のシステム開発会社です。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供しています。React/Next.js、Vue.js、Python等の最新技術で、お客様の業務課題を解決します。',
-  keywords: ['基幹システム開発', '業務システム開発', 'Webアプリケーション開発', '業務効率化ツール', 'システム開発', '受託開発', '東京', '新宿区', 'React', 'Next.js'],
+  description: '零元創匠（れいげんそうしょう）は東京都新宿区のシステム開発会社です。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供しています。React/Next.js、Vue.js、Python等の最新技術で、お客様の業務課題を解決します。',
+  keywords: ['零元創匠', 'れいげんそうしょう', 'レイゲンソウショウ', 'Reigen Soushou', '基幹システム開発', '業務システム開発', 'Webアプリケーション開発', '業務効率化ツール', 'システム開発', '受託開発', '東京', '新宿区', 'React', 'Next.js'],
   authors: [{ name: '零元創匠' }],
   creator: '零元創匠',
   publisher: '零元創匠',
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
     telephone: true,
   },
   openGraph: {
-    title: '零元創匠 | 基幹システム開発・業務システム開発',
-    description: '零元創匠は東京都新宿区のシステム開発会社です。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供しています。',
+    title: '零元創匠（れいげんそうしょう） | 基幹システム開発・業務システム開発',
+    description: '零元創匠（れいげんそうしょう）は東京都新宿区のシステム開発会社です。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供しています。',
     url: 'https://www.reigen-soushou.com',
     siteName: '零元創匠',
     locale: 'ja_JP',
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '零元創匠 | 基幹システム開発・業務システム開発',
-    description: '零元創匠は東京都新宿区のシステム開発会社です。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供しています。',
+    title: '零元創匠（れいげんそうしょう） | 基幹システム開発・業務システム開発',
+    description: '零元創匠（れいげんそうしょう）は東京都新宿区のシステム開発会社です。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供しています。',
   },
   robots: {
     index: true,
@@ -60,9 +60,9 @@ const organizationSchema = {
   "@type": "ProfessionalService",
   "@id": "https://www.reigen-soushou.com/#organization",
   "name": "零元創匠",
-  "alternateName": "Reigen Soushou",
+  "alternateName": ["Reigen Soushou", "れいげんそうしょう", "レイゲンソウショウ", "reigen-soushou"],
   "url": "https://www.reigen-soushou.com",
-  "description": "零元創匠は東京都新宿区のシステム開発会社です。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供しています。React/Next.js、Vue.js、Python等の最新技術で、お客様の業務課題を解決します。",
+  "description": "零元創匠（れいげんそうしょう）は東京都新宿区のシステム開発会社です。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供しています。React/Next.js、Vue.js、Python等の最新技術で、お客様の業務課題を解決します。",
   "foundingDate": "2025",
   "founder": {
     "@type": "Person",
@@ -175,9 +175,9 @@ const webSiteSchema = {
   "@type": "WebSite",
   "@id": "https://www.reigen-soushou.com/#website",
   "name": "零元創匠",
-  "alternateName": "Reigen Soushou",
+  "alternateName": ["Reigen Soushou", "れいげんそうしょう", "レイゲンソウショウ", "reigen-soushou"],
   "url": "https://www.reigen-soushou.com",
-  "description": "零元創匠は東京都新宿区のシステム開発会社です。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供しています。",
+  "description": "零元創匠（れいげんそうしょう）は東京都新宿区のシステム開発会社です。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供しています。",
   "inLanguage": "ja",
   "publisher": {
     "@id": "https://www.reigen-soushou.com/#organization"

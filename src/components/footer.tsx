@@ -34,7 +34,7 @@ export function Footer() {
 
         {/* コピーライト */}
         <p style={{ fontSize: '11px', color: '#808080', marginTop: '8px' }}>
-          &copy; 2025 零元創匠 All rights reserved.
+          &copy; 2025 零元創匠（れいげんそうしょう） All rights reserved.
         </p>
         <p style={{ fontSize: '10px', color: '#808080' }}>
           このサイトは800x600以上の解像度でご覧ください
