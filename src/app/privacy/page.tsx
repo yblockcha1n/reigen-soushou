@@ -1,6 +1,19 @@
-"use client";
-
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'プライバシーポリシー',
+  description: '零元創匠のプライバシーポリシーをご案内します。個人情報の取り扱い、収集範囲、利用目的、第三者提供、安全管理について定めています。',
+  openGraph: {
+    title: 'プライバシーポリシー | 零元創匠',
+    description: '零元創匠のプライバシーポリシーをご案内します。個人情報の取り扱いについて定めています。',
+    url: 'https://www.reigen-soushou.com/privacy',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://www.reigen-soushou.com/privacy',
+  },
+};
 
 const privacyItems = [
   {
@@ -59,39 +72,51 @@ const privacyItems = [
   },
 ];
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://www.reigen-soushou.com" },
+    { "@type": "ListItem", "position": 2, "name": "プライバシーポリシー", "item": "https://www.reigen-soushou.com/privacy" }
+  ]
+};
+
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "プライバシーポリシー | 零元創匠",
+  "description": "零元創匠のプライバシーポリシーをご案内します。個人情報の取り扱い、収集範囲、利用目的、第三者提供、安全管理について定めています。",
+  "url": "https://www.reigen-soushou.com/privacy",
+  "datePublished": "2025-03-24",
+  "dateModified": "2025-03-24",
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://www.reigen-soushou.com/#organization"
+  }
+};
+
 export default function PrivacyPage() {
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '8px' }}>
+    <main style={{ maxWidth: '800px', margin: '0 auto', padding: '8px' }}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "プライバシーポリシー | 零元創匠",
-            "description": "零元創匠のプライバシーポリシーをご案内します。",
-            "url": "https://www.reigen-soushou.com/privacy",
-            "datePublished": "2025-03-24",
-            "dateModified": "2025-03-24",
-            "publisher": {
-              "@type": "Organization",
-              "name": "零元創匠",
-              "url": "https://www.reigen-soushou.com"
-            }
-          })
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
       />
 
       {/* パンくずリスト */}
-      <p style={{ fontSize: '11px', marginBottom: '8px' }}>
+      <nav aria-label="パンくずリスト" style={{ fontSize: '11px', marginBottom: '8px' }}>
         <Link href="/">ホーム</Link> &gt; プライバシーポリシー
-      </p>
+      </nav>
 
       <table style={{ width: '100%', marginBottom: '8px' }}>
         <tbody>
           <tr>
             <td style={{ backgroundColor: '#000080', color: '#ffffff', padding: '4px 8px', fontWeight: 'bold', fontSize: '18px', textAlign: 'center' }}>
-              ■ プライバシーポリシー ■
+              <h1 style={{ fontSize: '18px', margin: 0, color: '#ffffff' }}>■ プライバシーポリシー ■</h1>
             </td>
           </tr>
         </tbody>
@@ -103,22 +128,24 @@ export default function PrivacyPage() {
 
       <hr />
 
-      {privacyItems.map((item, index) => (
-        <div key={index} style={{ marginBottom: '12px' }}>
-          <h2 style={{ fontSize: '14px', color: '#000080', fontWeight: 'bold', marginBottom: '4px' }}>
-            {item.title}
-          </h2>
-          {Array.isArray(item.content) ? (
-            <div style={{ fontSize: '13px', paddingLeft: '8px' }}>
-              {item.content.map((line, idx) => (
-                <p key={idx} style={{ marginBottom: '2px' }}>{line || '\u00A0'}</p>
-              ))}
-            </div>
-          ) : (
-            <p style={{ fontSize: '13px', paddingLeft: '8px' }}>{item.content}</p>
-          )}
-        </div>
-      ))}
+      <section aria-label="プライバシーポリシー本文">
+        {privacyItems.map((item, index) => (
+          <div key={index} style={{ marginBottom: '12px' }}>
+            <h2 style={{ fontSize: '14px', color: '#000080', fontWeight: 'bold', marginBottom: '4px' }}>
+              {item.title}
+            </h2>
+            {Array.isArray(item.content) ? (
+              <div style={{ fontSize: '13px', paddingLeft: '8px' }}>
+                {item.content.map((line, idx) => (
+                  <p key={idx} style={{ marginBottom: '2px' }}>{line || '\u00A0'}</p>
+                ))}
+              </div>
+            ) : (
+              <p style={{ fontSize: '13px', paddingLeft: '8px' }}>{item.content}</p>
+            )}
+          </div>
+        ))}
+      </section>
 
       <hr />
 
@@ -128,6 +155,6 @@ export default function PrivacyPage() {
           最終更新日: 2025年3月24日
         </span>
       </div>
-    </div>
+    </main>
   );
 }

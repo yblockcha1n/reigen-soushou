@@ -1,0 +1,43 @@
+# 零元創匠 (Reigen Soushou)
+
+> 零元創匠は東京都新宿区に拠点を置くシステム開発会社です。基幹システム開発、Webアプリケーション開発、業務効率化ツールの開発を提供しています。React/Next.js、Vue.js/Nuxt.js、TypeScript、Node.js、Python等の最新技術で、お客様の業務課題を解決します。
+
+零元創匠（れいげんそうしょう）は「零から始まるイノベーション」をモットーに、お客様のビジョンやアイデアの本質を損なうことなく、最新のテクノロジーで新たな価値を創造する技術集団です。代表の根岸優翔を中心に、製造業・卸売業・人材派遣業・不動産業・EC事業者向けなど、業種を問わず業務システムの受託開発を行っています。
+
+## 会社情報
+- 屋号: 零元創匠
+- 代表者: 根岸 優翔
+- 所在地: 東京都新宿区富久町2-22 クレドール富久 201号室（〒162-0067）
+- メール: negishi-yuto@reigen-soushou.com
+- 営業時間: 平日 9:00 - 18:00
+
+## サービス
+- [Webアプリケーション開発・設計](https://www.reigen-soushou.com/#services): React/Next.js、Vue.js/Nuxt.js、TypeScript、REST API設計を活用したWebアプリケーション開発
+- [業務効率化ツールの開発](https://www.reigen-soushou.com/#services): 自動化ツール、データ分析、レポート生成、ワークフロー最適化
+- [API連携・システム統合](https://www.reigen-soushou.com/#services): REST/GraphQL API、外部サービス連携、データ移行、マイクロサービス
+- [Webサイト開発](https://www.reigen-soushou.com/#services): レスポンシブデザイン、SEO対策、パフォーマンス最適化、CMS実装
+- [基幹システムの開発・設計](https://www.reigen-soushou.com/#services): データベース設計、セキュリティ対策、システム統合、保守運用
+- [保守・運用サポート](https://www.reigen-soushou.com/#services): 24時間監視体制、定期メンテナンス、機能追加・改修、ヘルプデスク対応
+
+## ページ一覧
+- [ホーム](https://www.reigen-soushou.com/): サービス概要、開発フロー、企業理念、FAQ
+- [私たちについて](https://www.reigen-soushou.com/about): 事業者情報、所在地、企業理念
+- [開発実績](https://www.reigen-soushou.com/works): 受託開発の事例紹介
+- [お問い合わせ](https://www.reigen-soushou.com/contact): お問い合わせフォーム、連絡先情報
+
+## 開発実績
+- 製造業向け生産管理システム（Next.js, TypeScript, PostgreSQL, Docker, AWS）
+- 卸売業向け販売管理システム（React, Node.js, MySQL, Redis, GCP）
+- 人材派遣業向け勤怠・給与システム（Vue.js, Python, PostgreSQL, Docker, Azure）
+- 不動産業向け物件管理システム（Next.js, TypeScript, Supabase, Vercel）
+- EC事業者向け受注管理システム（React, Node.js, MongoDB, AWS Lambda）
+
+## 技術スタック
+- フロントエンド: React, Next.js, Vue.js, Nuxt.js, TypeScript
+- バックエンド: Node.js, Python, PHP
+- データベース: PostgreSQL, MySQL, MongoDB, Redis
+- インフラ: AWS, GCP, Azure, Docker, Vercel, Supabase
+
+## Optional
+- [特定商取引法に基づく表記](https://www.reigen-soushou.com/legal): 取引条件の詳細
+- [プライバシーポリシー](https://www.reigen-soushou.com/privacy): 個人情報の取り扱い方針

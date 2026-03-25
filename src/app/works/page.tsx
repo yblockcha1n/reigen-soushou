@@ -1,6 +1,19 @@
-"use client";
-
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: '開発実績',
+  description: '零元創匠の受託開発実績をご紹介します。製造業向け生産管理システム、卸売業向け販売管理システム、人材派遣業向け勤怠・給与システムなど、業種を問わず業務システム開発の実績があります。',
+  openGraph: {
+    title: '開発実績 | 零元創匠',
+    description: '零元創匠の受託開発実績をご紹介します。基幹システム開発、業務システム開発、Webアプリケーション開発の実績があります。',
+    url: 'https://www.reigen-soushou.com/works',
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://www.reigen-soushou.com/works',
+  },
+};
 
 const developmentProjects = [
   {
@@ -35,129 +48,149 @@ const developmentProjects = [
   },
 ];
 
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "https://www.reigen-soushou.com" },
+    { "@type": "ListItem", "position": 2, "name": "開発実績", "item": "https://www.reigen-soushou.com/works" }
+  ]
+};
+
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "headline": "開発実績 | 零元創匠",
+  "description": "零元創匠の受託開発実績をご紹介します。製造業、卸売業、人材派遣業、不動産業、EC事業者向けなど、業種を問わず業務システム開発の実績があります。",
+  "url": "https://www.reigen-soushou.com/works",
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": developmentProjects.length,
+    "itemListElement": developmentProjects.map((project, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "SoftwareApplication",
+        "name": project.title,
+        "description": project.description,
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "author": {
+          "@type": "Organization",
+          "@id": "https://www.reigen-soushou.com/#organization"
+        }
+      }
+    }))
+  }
+};
+
 export default function WorksPage() {
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '8px' }}>
-      {/* スキーママークアップ */}
+    <main style={{ maxWidth: '800px', margin: '0 auto', padding: '8px' }}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            "headline": "開発実績 | 零元創匠",
-            "description": "零元創匠の開発実績をご紹介します。",
-            "url": "https://www.reigen-soushou.com/works",
-            "mainEntity": {
-              "@type": "ItemList",
-              "itemListElement": developmentProjects.map((project, index) => ({
-                "@type": "ListItem",
-                "position": index + 1,
-                "item": {
-                  "@type": "SoftwareApplication",
-                  "name": project.title,
-                  "description": project.description,
-                  "applicationCategory": "BusinessApplication",
-                }
-              }))
-            }
-          })
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
       />
 
       {/* パンくずリスト */}
-      <p style={{ fontSize: '11px', marginBottom: '8px' }}>
+      <nav aria-label="パンくずリスト" style={{ fontSize: '11px', marginBottom: '8px' }}>
         <Link href="/">ホーム</Link> &gt; 開発実績
-      </p>
+      </nav>
 
       <table style={{ width: '100%', marginBottom: '8px' }}>
         <tbody>
           <tr>
             <td style={{ backgroundColor: '#000080', color: '#ffffff', padding: '4px 8px', fontWeight: 'bold', fontSize: '18px', textAlign: 'center' }}>
-              ■ 開発実績 ■
+              <h1 style={{ fontSize: '18px', margin: 0, color: '#ffffff' }}>■ 開発実績 ■</h1>
             </td>
           </tr>
         </tbody>
       </table>
 
       <p style={{ textAlign: 'center', fontSize: '13px', marginBottom: '16px' }}>
-        私たちが手がけた基幹システム・業務システムの開発事例をご紹介します。<br />
-        お客様の業務課題を解決し、ビジネスの成長に貢献してきました。
+        零元創匠が手がけた基幹システム・業務システムの受託開発事例をご紹介します。製造業、卸売業、人材派遣業、不動産業、EC事業者向けなど、業種を問わず業務課題を解決し、ビジネスの成長に貢献してきました。
       </p>
 
       <hr />
 
-      <h2 style={{ fontSize: '16px', color: '#000080', marginBottom: '12px' }}>
-        ◆ 受託開発実績
-      </h2>
+      <section aria-label="受託開発実績">
+        <h2 style={{ fontSize: '16px', color: '#000080', marginBottom: '12px' }}>
+          ◆ 受託開発実績
+        </h2>
 
-      {developmentProjects.map((project, index) => (
-        <div key={index} style={{ marginBottom: '16px' }}>
-          <div className="win95-raised" style={{ padding: '2px' }}>
-            {/* タイトルバー */}
-            <div className="win95-titlebar">
-              <span>📁 {project.title}</span>
+        {developmentProjects.map((project, index) => (
+          <article key={index} style={{ marginBottom: '16px' }}>
+            <div className="win95-raised" style={{ padding: '2px' }}>
+              <div className="win95-titlebar">
+                <span>📁 {project.title}</span>
+              </div>
+
+              <div style={{ backgroundColor: '#ffffff', border: '1px solid #808080', padding: '12px' }}>
+                <p style={{ fontSize: '13px', marginBottom: '8px' }}>
+                  {project.description}
+                </p>
+
+                <table style={{ width: '100%', marginBottom: '8px' }}>
+                  <tbody>
+                    <tr>
+                      <td style={{ verticalAlign: 'top', width: '50%' }}>
+                        <p style={{ fontWeight: 'bold', fontSize: '12px', marginBottom: '4px' }}>
+                          ✓ 主な機能:
+                        </p>
+                        <ul style={{ fontSize: '12px', paddingLeft: '16px', listStyle: 'disc' }}>
+                          {project.features.map((feature, idx) => (
+                            <li key={idx}>{feature}</li>
+                          ))}
+                        </ul>
+                      </td>
+                      <td style={{ verticalAlign: 'top', width: '50%' }}>
+                        <p style={{ fontWeight: 'bold', fontSize: '12px', marginBottom: '4px' }}>
+                          🔧 使用技術:
+                        </p>
+                        <p style={{ fontSize: '12px' }}>
+                          {project.technologies.map((tech, idx) => (
+                            <span key={idx}>
+                              [{tech}]{idx < project.technologies.length - 1 ? ' ' : ''}
+                            </span>
+                          ))}
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-
-            <div style={{ backgroundColor: '#ffffff', border: '1px solid #808080', padding: '12px' }}>
-              <p style={{ fontSize: '13px', marginBottom: '8px' }}>
-                {project.description}
-              </p>
-
-              <table style={{ width: '100%', marginBottom: '8px' }}>
-                <tbody>
-                  <tr>
-                    <td style={{ verticalAlign: 'top', width: '50%' }}>
-                      <p style={{ fontWeight: 'bold', fontSize: '12px', marginBottom: '4px' }}>
-                        ✓ 主な機能:
-                      </p>
-                      <ul style={{ fontSize: '12px', paddingLeft: '16px', listStyle: 'disc' }}>
-                        {project.features.map((feature, idx) => (
-                          <li key={idx}>{feature}</li>
-                        ))}
-                      </ul>
-                    </td>
-                    <td style={{ verticalAlign: 'top', width: '50%' }}>
-                      <p style={{ fontWeight: 'bold', fontSize: '12px', marginBottom: '4px' }}>
-                        🔧 使用技術:
-                      </p>
-                      <p style={{ fontSize: '12px' }}>
-                        {project.technologies.map((tech, idx) => (
-                          <span key={idx}>
-                            [{tech}]{idx < project.technologies.length - 1 ? ' ' : ''}
-                          </span>
-                        ))}
-                      </p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      ))}
+          </article>
+        ))}
+      </section>
 
       <hr />
 
       {/* CTA */}
-      <div className="retro-card" style={{ marginBottom: '16px' }}>
-        <div className="retro-card-inner" style={{ textAlign: 'center' }}>
-          <h2 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}>
-            御社の業務課題を解決しませんか？
-          </h2>
-          <p style={{ fontSize: '13px', color: '#404040', marginBottom: '12px' }}>
-            業務の効率化やシステム化でお困りのことがございましたら、<br />
-            お気軽にご相談ください。
-          </p>
-          <Link href="/contact" className="win95-button" style={{ fontSize: '14px', fontWeight: 'bold' }}>
-            ▶ お問い合わせ
-          </Link>
+      <section aria-label="お問い合わせ">
+        <div className="retro-card" style={{ marginBottom: '16px' }}>
+          <div className="retro-card-inner" style={{ textAlign: 'center' }}>
+            <h2 style={{ fontSize: '16px', fontWeight: 'bold', marginBottom: '8px' }}>
+              御社の業務課題を解決しませんか？
+            </h2>
+            <p style={{ fontSize: '13px', color: '#404040', marginBottom: '12px' }}>
+              業務の効率化やシステム化でお困りのことがございましたら、<br />
+              お気軽にご相談ください。零元創匠が最適なソリューションをご提案します。
+            </p>
+            <Link href="/contact" className="win95-button" style={{ fontSize: '14px', fontWeight: 'bold' }}>
+              ▶ お問い合わせ
+            </Link>
+          </div>
         </div>
-      </div>
+      </section>
 
       <p style={{ textAlign: 'center', marginBottom: '16px' }}>
         [<Link href="/">ホームに戻る</Link>]
       </p>
-    </div>
+    </main>
   );
 }

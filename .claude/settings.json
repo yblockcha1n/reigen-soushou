@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:llmstxt.org)",
+      "WebFetch(domain:www.adnanzameer.com)",
+      "WebFetch(domain:searchengineland.com)",
+      "WebFetch(domain:almcorp.com)",
+      "WebFetch(domain:firstpagesage.com)",
+      "WebFetch(domain:wellows.com)",
+      "WebFetch(domain:blogs.bing.com)",
+      "WebFetch(domain:www.frase.io)",
+      "WebFetch(domain:genrank.io)",
+      "WebFetch(domain:developer.yoast.com)",
+      "WebFetch(domain:support.claude.com)",
+      "WebFetch(domain:vercel.com)",
+      "WebFetch(domain:www.ulpa.jp)",
+      "WebFetch(domain:www.semrush.com)",
+      "Bash(openssl rand:*)",
+      "Bash(npm run:*)"
+    ]
+  }
+}
