@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { HitCounter } from "@/components/HitCounter";
 import { MarqueeText } from "@/components/MarqueeText";
+import { GamePortal } from "@/components/game/GamePortal";
 
 const HOME_FAQS = [
   {
@@ -122,6 +123,7 @@ const howToSchema = {
 export default function Home() {
   return (
     <main style={{ maxWidth: '800px', margin: '0 auto', padding: '8px' }}>
+      <GamePortal />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

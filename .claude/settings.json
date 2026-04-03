@@ -18,7 +18,8 @@
       "WebFetch(domain:www.semrush.com)",
       "Bash(openssl rand:*)",
       "Bash(npm run:*)",
-      "Read(//Users/yblockchain/Documents/**)"
+      "Read(//Users/yblockchain/Documents/**)",
+      "Bash(npx next:*)"
     ]
   }
 }
